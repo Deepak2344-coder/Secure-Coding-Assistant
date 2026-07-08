@@ -1,0 +1,142 @@
+[
+  {
+    "id": "sqli_001",
+    "vuln_type": "sql_injection",
+    "code": "def get_user(name):\n    query = \"SELECT * FROM users WHERE name = '\" + name + \"'\"\n    cursor.execute(query)",
+    "label": "vulnerable",
+    "notes": "String concatenation in SQL query"
+  },
+  {
+    "id": "sqli_002",
+    "vuln_type": "sql_injection",
+    "code": "def login(username, password):\n    query = f\"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'\"\n    db.execute(query)",
+    "label": "vulnerable",
+    "notes": "f-string in SQL query"
+  },
+  {
+    "id": "sqli_003",
+    "vuln_type": "sql_injection",
+    "code": "def search(term):\n    query = \"SELECT * FROM products WHERE name LIKE '%{}%'\".format(term)\n    cursor.execute(query)",
+    "label": "vulnerable",
+    "notes": ".format() in SQL query"
+  },
+  {
+    "id": "sqli_004",
+    "vuln_type": "sql_injection",
+    "code": "def delete_user(uid):\n    query = \"DELETE FROM users WHERE id = %s\" % uid\n    db.run(query)",
+    "label": "vulnerable",
+    "notes": "% formatting in SQL query"
+  },
+  {
+    "id": "sqli_005",
+    "vuln_type": "sql_injection",
+    "code": "def update_email(user_id, email):\n    query = \"UPDATE users SET email = '\" + email + \"' WHERE id = \" + str(user_id)\n    conn.execute(query)",
+    "label": "vulnerable",
+    "notes": "Multiple concatenations in UPDATE query"
+  },
+  {
+    "id": "cmd_001",
+    "vuln_type": "command_injection",
+    "code": "def ping(host):\n    os.system(\"ping -c 1 \" + host)",
+    "label": "vulnerable",
+    "notes": "os.system with concatenated input"
+  },
+  {
+    "id": "cmd_002",
+    "vuln_type": "command_injection",
+    "code": "def run_command(cmd):\n    subprocess.call(cmd, shell=True)",
+    "label": "vulnerable",
+    "notes": "subprocess.call with shell=True"
+  },
+  {
+    "id": "cmd_003",
+    "vuln_type": "command_injection",
+    "code": "def list_dir(path):\n    subprocess.Popen(f\"ls -la {path}\", shell=True)",
+    "label": "vulnerable",
+    "notes": "subprocess.Popen with f-string and shell=True"
+  },
+  {
+    "id": "cmd_004",
+    "vuln_type": "command_injection",
+    "code": "def execute(user_input):\n    os.popen(\"echo \" + user_input)",
+    "label": "vulnerable",
+    "notes": "os.popen with concatenated input"
+  },
+  {
+    "id": "cmd_005",
+    "vuln_type": "command_injection",
+    "code": "def backup(filename):\n    cmd = \"tar -czf backup.tar.gz \" + filename\n    os.system(cmd)",
+    "label": "vulnerable",
+    "notes": "Indirect os.system via variable"
+  },
+  {
+    "id": "secret_001",
+    "vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "label": "vulnerable",
+    "notes": "Hardcoded API key"
+  },
+  {
+    "id": "secret_002",
+    "vuln_type": "hardcoded_secret",
+    "code": "DATABASE_PASSWORD = \"super_secret_p@ssw0rd_2024\"",
+    "label": "vulnerable",
+    "notes": "Hardcoded database password"
+  },
+  {
+    "id": "secret_003",
+    "vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"django-insecure-abc123def456ghi789jkl\"",
+    "label": "vulnerable",
+    "notes": "Hardcoded Django secret key"
+  },
+  {
+    "id": "secret_004",
+    "vuln_type": "hardcoded_secret",
+    "code": "aws_access_token = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "label": "vulnerable",
+    "notes": "Hardcoded AWS access token"
+  },
+  {
+    "id": "secret_005",
+    "vuln_type": "hardcoded_secret",
+    "code": "github_token = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "label": "vulnerable",
+    "notes": "Hardcoded GitHub token"
+  },
+  {
+    "id": "xss_001",
+    "vuln_type": "xss",
+    "code": "def render_profile(username):\n    return render_template_string(f\"<h1>Welcome {username}!</h1>\")",
+    "label": "vulnerable",
+    "notes": "render_template_string with f-string user input"
+  },
+  {
+    "id": "xss_002",
+    "vuln_type": "xss",
+    "code": "<div>{{ user_input|safe }}</div>",
+    "label": "vulnerable",
+    "notes": "Jinja2 safe filter bypasses escaping"
+  },
+  {
+    "id": "xss_003",
+    "vuln_type": "xss",
+    "code": "{% autoescape false %}\n{{ user_comment }}\n{% endautoescape %}",
+    "label": "vulnerable",
+    "notes": "Disabled autoescape in Jinja2"
+  },
+  {
+    "id": "xss_004",
+    "vuln_type": "xss",
+    "code": "def display_message(msg):\n    return Markup(f\"<div class='alert'>{msg}</div>\")",
+    "label": "vulnerable",
+    "notes": "Markup() marks string as safe HTML"
+  },
+  {
+    "id": "xss_005",
+    "vuln_type": "xss",
+    "code": "def show_search(query):\n    html = \"<p>You searched for: \" + query + \"</p>\"\n    return render_template_string(html)",
+    "label": "vulnerable",
+    "notes": "String concatenation in render_template_string"
+  }
+]

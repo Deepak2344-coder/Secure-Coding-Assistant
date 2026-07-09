@@ -14,6 +14,7 @@ class VulnType(str, Enum):
     BUILTIN_REASSIGN = "builtin_reassign"
     IS_LITERAL_COMPARE = "is_literal_compare"
     EQUALS_NONE = "equals_none"
+    UNDEFINED_NAME = "undefined_name"
 
 
 class IssueCategory(str, Enum):

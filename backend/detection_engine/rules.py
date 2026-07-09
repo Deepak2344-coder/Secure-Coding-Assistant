@@ -27,6 +27,27 @@ XSS_PATTERNS = [
     re.compile(r'Markup\s*\(.*\)'),
 ]
 
+PYTHON_BUILTINS = {
+    "True", "False", "None",
+    "print", "len", "range", "int", "str", "float", "bool",
+    "list", "dict", "set", "tuple", "type", "input", "open",
+    "sum", "min", "max", "abs", "all", "any", "sorted",
+    "reversed", "enumerate", "zip", "map", "filter",
+    "isinstance", "issubclass", "hasattr", "getattr", "setattr", "delattr",
+    "dir", "id", "repr", "object", "super", "callable", "iter", "next",
+    "Exception", "ValueError", "TypeError", "KeyError",
+    "IndexError", "AttributeError", "ImportError", "StopIteration",
+    "RuntimeError", "ZeroDivisionError", "FileNotFoundError",
+    "MemoryError", "NameError", "SyntaxError", "IndentationError",
+    "TabError", "SystemExit", "KeyboardInterrupt", "BaseException",
+    "property", "staticmethod", "classmethod", "hash", "help",
+    "hex", "oct", "bin", "ord", "chr", "format", "vars",
+    "globals", "locals", "slice", "pow", "round", "__import__",
+    "AssertionError", "NotImplementedError", "PendingDeprecationWarning",
+    "bytes", "bytearray", "memoryview", "frozenset",
+    "hasattr", "issubclass", "isinstance",
+}
+
 SHADOWED_BUILTINS = {
     "list", "dict", "set", "tuple", "str", "int", "float", "bool",
     "input", "print", "open", "len", "range", "type", "sum", "min", "max",
@@ -268,6 +289,53 @@ def check_logical_errors(code: str) -> list[Issue]:
                             message="Use 'is None' instead of '== None' for identity comparison",
                         )
                     )
+
+        # 6. Undefined variable references
+    defined_names = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Name):
+            if isinstance(n.ctx, (ast.Store, ast.AugStore)):
+                defined_names.add(n.id)
+            elif isinstance(n.ctx, ast.Del):
+                defined_names.discard(n.id)
+        elif isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            defined_names.add(n.name)
+            for arg in n.args.args + n.args.posonlyargs + n.args.kwonlyargs:
+                defined_names.add(arg.arg)
+            if n.args.vararg:
+                defined_names.add(n.args.vararg.arg)
+            if n.args.kwarg:
+                defined_names.add(n.args.kwarg.arg)
+        elif isinstance(n, ast.ClassDef):
+            defined_names.add(n.name)
+        elif isinstance(n, ast.Import):
+            for alias in n.names:
+                defined_names.add(alias.asname or alias.name.split(".")[0])
+        elif isinstance(n, ast.ImportFrom):
+            for alias in n.names:
+                defined_names.add(alias.asname or alias.name)
+        elif isinstance(n, ast.ExceptHandler) and n.name:
+            defined_names.add(n.name)
+
+    first_ref = {}
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
+            if n.id not in defined_names and n.id not in PYTHON_BUILTINS:
+                if n.id not in first_ref:
+                    first_ref[n.id] = (n.lineno, _get_line_snippet(code, n.lineno))
+
+    for name, (lineno, snippet) in sorted(first_ref.items()):
+        issues.append(
+            Issue(
+                line=lineno,
+                vuln_type=VulnType.UNDEFINED_NAME,
+                snippet=snippet,
+                confidence="medium",
+                severity=Severity.MEDIUM,
+                category=IssueCategory.LOGIC,
+                message=f"Name '{name}' is not defined in this scope",
+            )
+        )
 
     return issues
 

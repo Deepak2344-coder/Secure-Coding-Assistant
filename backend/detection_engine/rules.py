@@ -1,7 +1,7 @@
 import ast
 import re
 
-from backend.schemas import Issue, VulnType, Severity
+from backend.schemas import Issue, VulnType, Severity, IssueCategory
 
 SQL_KEYWORDS = ["select", "insert", "update", "delete", "from", "where", "drop", "union"]
 
@@ -26,6 +26,12 @@ XSS_PATTERNS = [
     re.compile(r'{%\s*autoescape\s+false\s*%}'),
     re.compile(r'Markup\s*\(.*\)'),
 ]
+
+SHADOWED_BUILTINS = {
+    "list", "dict", "set", "tuple", "str", "int", "float", "bool",
+    "input", "print", "open", "len", "range", "type", "sum", "min", "max",
+    "file", "exec", "eval", "id", "object", "super",
+}
 
 
 def _get_line_snippet(code: str, line_no: int) -> str:
@@ -153,6 +159,116 @@ def _check_xss(code: str) -> list[Issue]:
                     )
                 )
                 break
+    return issues
+
+
+def check_syntax_errors(code: str) -> list[Issue]:
+    try:
+        ast.parse(code)
+    except SyntaxError as e:
+        line_no = e.lineno or 1
+        return [
+            Issue(
+                line=line_no,
+                vuln_type=VulnType.SYNTAX_ERROR,
+                snippet=_get_line_snippet(code, line_no),
+                confidence="high",
+                severity=Severity.HIGH,
+                category=IssueCategory.SYNTAX,
+                message=e.msg,
+            )
+        ]
+    return []
+
+
+def check_logical_errors(code: str) -> list[Issue]:
+    issues = []
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return issues
+
+    for node in ast.walk(tree):
+        line_no = getattr(node, "lineno", 0)
+
+        # 1. Mutable default arguments
+        if isinstance(node, ast.FunctionDef):
+            for default in node.args.defaults + node.args.kw_defaults:
+                if default is not None and isinstance(default, (ast.List, ast.Dict, ast.Set)):
+                    issues.append(
+                        Issue(
+                            line=default.lineno,
+                            vuln_type=VulnType.MUTABLE_DEFAULT_ARG,
+                            snippet=_get_line_snippet(code, default.lineno),
+                            confidence="high",
+                            severity=Severity.MEDIUM,
+                            category=IssueCategory.LOGIC,
+                            message="Mutable default argument is shared across all calls",
+                        )
+                    )
+
+        # 2. Bare except handlers
+        if isinstance(node, ast.ExceptHandler) and node.type is None:
+            issues.append(
+                Issue(
+                    line=line_no,
+                    vuln_type=VulnType.BARE_EXCEPT,
+                    snippet=_get_line_snippet(code, line_no),
+                    confidence="high",
+                    severity=Severity.MEDIUM,
+                    category=IssueCategory.LOGIC,
+                    message="Bare except catches SystemExit and KeyboardInterrupt",
+                )
+            )
+
+        # 3. Built-in name shadowing
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id in SHADOWED_BUILTINS:
+                    issues.append(
+                        Issue(
+                            line=target.lineno,
+                            vuln_type=VulnType.BUILTIN_REASSIGN,
+                            snippet=_get_line_snippet(code, target.lineno),
+                            confidence="high",
+                            severity=Severity.LOW,
+                            category=IssueCategory.LOGIC,
+                            message=f"Assigning to built-in '{target.id}' shadows the original",
+                        )
+                    )
+
+        # 4. 'is' comparison with a literal (except None)
+        if isinstance(node, ast.Compare):
+            for op, comp in zip(node.ops, node.comparators):
+                if isinstance(op, ast.Is) and isinstance(comp, ast.Constant) and comp.value is not None:
+                    issues.append(
+                        Issue(
+                            line=line_no,
+                            vuln_type=VulnType.IS_LITERAL_COMPARE,
+                            snippet=_get_line_snippet(code, line_no),
+                            confidence="high",
+                            severity=Severity.MEDIUM,
+                            category=IssueCategory.LOGIC,
+                            message=f"Use '==' instead of 'is' to compare literal values",
+                        )
+                    )
+
+        # 5. '== None' instead of 'is None'
+        if isinstance(node, ast.Compare):
+            for op, comp in zip(node.ops, node.comparators):
+                if isinstance(op, ast.Eq) and isinstance(comp, ast.Constant) and comp.value is None:
+                    issues.append(
+                        Issue(
+                            line=line_no,
+                            vuln_type=VulnType.EQUALS_NONE,
+                            snippet=_get_line_snippet(code, line_no),
+                            confidence="high",
+                            severity=Severity.LOW,
+                            category=IssueCategory.LOGIC,
+                            message="Use 'is None' instead of '== None' for identity comparison",
+                        )
+                    )
+
     return issues
 
 

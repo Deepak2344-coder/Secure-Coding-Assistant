@@ -95,15 +95,23 @@ if st.button("Scan Code", type="primary"):
                                     st.info(issue["message"])
                                 st.code(issue["snippet"], language="python")
 
+                            if issue.get("explanation"):
+                                st.markdown("---")
+                                st.markdown("**Explanation**")
+                                st.info(issue["explanation"])
+
+                            if issue.get("secure_rewrite"):
+                                st.markdown("**Secure Rewrite**")
+                                st.code(issue["secure_rewrite"], language="python")
+
+                            if issue.get("cwe_reference"):
+                                cwe = issue["cwe_reference"]
+                                url = issue.get("source_url") or f"https://cwe.mitre.org/data/definitions/{cwe.split('-')[1]}.html"
+                                st.markdown(f"**Reference:** [{cwe}]({url})")
+
             except requests.exceptions.ConnectionError:
                 st.error(
                     "Cannot connect to the backend. Make sure the FastAPI server is running on port 8000."
                 )
             except Exception as e:
                 st.error(f"An error occurred: {e}")
-
-st.divider()
-st.markdown(
-    "**Note:** This is a syntactic scanner (v0). "
-    "Semantic retrieval and LLM-based explanations coming in future releases."
-)

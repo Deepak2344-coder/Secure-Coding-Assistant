@@ -37,6 +37,10 @@ class Issue(BaseModel):
     severity: Severity
     category: IssueCategory = IssueCategory.SECURITY
     message: str = ""
+    explanation: str = ""
+    secure_rewrite: str = ""
+    cwe_reference: str = ""
+    source_url: str = ""
 
 
 class ScanRequest(BaseModel):

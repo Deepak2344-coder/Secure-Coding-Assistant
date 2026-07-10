@@ -441,58 +441,64 @@ with st.sidebar:
         else:
             st.caption("💡 Install `fpdf2` for PDF export: `pip install fpdf2`")
 
-# Initialize session state for uploaded code
-if "uploaded_code" not in st.session_state:
-    st.session_state.uploaded_code = ""
+# --- Callback-based file upload (no st.rerun, no truthy-file loop) ---
+if "code_text" not in st.session_state:
+    st.session_state.code_text = ""
 
-# Get code from session state (uploaded file takes priority)
-code_input = st.session_state.uploaded_code
 
-code_input = st.text_area(
-    "Code Input",
-    height=300,
-    value=code_input,
-    placeholder='# Paste your Python code here...\n\ndef get_user(name):\n    query = "SELECT * FROM users WHERE name = \'" + name + "\'"\n    ...',
+def _on_upload():
+    f = st.session_state.get("file_uploader")
+    if f is not None:
+        try:
+            st.session_state.code_text = f.read().decode("utf-8")
+        except Exception:
+            st.session_state.code_text = ""
+    # If f is None (user clicked X), keep code_text as-is
+
+
+def _clear():
+    st.session_state.code_text = ""
+
+
+st.file_uploader(
+    "Or upload a .py file",
+    type=["py"],
+    key="file_uploader",
+    on_change=_on_upload,
 )
 
-uploaded_file = st.file_uploader("Or upload a .py file", type=["py"])
-
-if uploaded_file:
-    uploaded_content = uploaded_file.read().decode("utf-8")
-    st.session_state.uploaded_code = uploaded_content
-    st.rerun()
-else:
-    # Sync text_area changes back to session state for scan
-    # Only when NOT uploading, to avoid overwriting the just-set value
-    st.session_state.uploaded_code = code_input
+code_text = st.text_area(
+    "Code Input",
+    height=300,
+    key="code_text",
+    placeholder='# Paste your Python code here...\n\ndef get_user(name):\n    query = "SELECT * FROM users WHERE name = \'" + name + "\'"\n    ...',
+)
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     scan_clicked = st.button("🔍 Scan Code", type="primary", use_container_width=True)
 with col2:
-    if st.button("🗑️ Clear", use_container_width=True):
-        st.session_state.uploaded_code = ""
-        st.rerun()
+    st.button("🗑️ Clear", use_container_width=True, on_click=_clear)
 with col3:
     if "scan_result" in st.session_state and st.button("🔄 Rescan", use_container_width=True):
         scan_clicked = True
 
 if scan_clicked:
-    if not st.session_state.uploaded_code.strip():
+    if not st.session_state.code_text.strip():
         st.warning("Please enter or upload some code to scan.")
     else:
         with st.spinner("Scanning code for vulnerabilities..."):
             try:
                 response = requests.post(
                     f"{API_URL}/scan",
-                    json={"code": st.session_state.uploaded_code},
+                    json={"code": st.session_state.code_text},
                     timeout=60,
                 )
                 response.raise_for_status()
                 result = response.json()
                 
                 st.session_state.scan_result = result
-                st.session_state.scan_code = st.session_state.uploaded_code
+                st.session_state.scan_code = st.session_state.code_text
                 
                 if not result["issues"]:
                     st.success("✅ No issues detected! Your code looks secure.")
@@ -511,7 +517,7 @@ if scan_clicked:
 if "scan_result" in st.session_state:
     result = st.session_state.scan_result
     issues = result.get("issues", [])
-    code = st.session_state.get("scan_code", code_input)
+    code = st.session_state.get("scan_code", st.session_state.code_text)
     
     if issues:
         st.markdown("---")

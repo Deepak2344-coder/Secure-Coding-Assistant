@@ -477,21 +477,21 @@ with col3:
         scan_clicked = True
 
 if scan_clicked:
-    if not code_input.strip():
+    if not st.session_state.uploaded_code.strip():
         st.warning("Please enter or upload some code to scan.")
     else:
         with st.spinner("Scanning code for vulnerabilities..."):
             try:
                 response = requests.post(
                     f"{API_URL}/scan",
-                    json={"code": code_input},
+                    json={"code": st.session_state.uploaded_code},
                     timeout=60,
                 )
                 response.raise_for_status()
                 result = response.json()
                 
                 st.session_state.scan_result = result
-                st.session_state.scan_code = code_input
+                st.session_state.scan_code = st.session_state.uploaded_code
                 
                 if not result["issues"]:
                     st.success("✅ No issues detected! Your code looks secure.")

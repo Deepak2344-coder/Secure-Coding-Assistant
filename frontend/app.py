@@ -318,6 +318,30 @@ def generate_markdown_report(code: str, issues: list, scan_time: str) -> str:
     
     return "\n".join(lines)
 
+def _pdf_safe(text: str) -> str:
+    """Make text safe for the default (Latin-1) PDF fonts.
+
+    Replaces common Unicode punctuation (em/en dashes, smart quotes,
+    arrows, bullets, ellipsis, non-breaking spaces) with ASCII equivalents
+    and drops any remaining non-Latin-1 characters so fpdf2 never raises
+    FPDFUnicodeEncodingException.
+    """
+    if text is None:
+        return ""
+    repl = {
+        "\u2014": "-", "\u2013": "-",          # em / en dash
+        "\u2018": "'", "\u2019": "'",          # smart single quotes
+        "\u201c": '"', "\u201d": '"',          # smart double quotes
+        "\u2026": "...", "\u2022": "*",        # ellipsis / bullet
+        "\u2192": "->", "\u2190": "<-", "\u2194": "<->",  # arrows
+        "\u00a0": " ",                          # non-breaking space
+        "\u2011": "-", "\u2043": "-",          # non-breaking / hyphen bullet
+    }
+    for k, v in repl.items():
+        text = text.replace(k, v)
+    return text.encode("latin-1", "replace").decode("latin-1")
+
+
 def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes:
     """Generate a PDF report using FPDF."""
     if not FPDF_AVAILABLE:
@@ -329,58 +353,58 @@ def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes:
     
     # Title
     pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 10, "Secure Coding Assistant - Scan Report", ln=True, align="C")
+    pdf.cell(0, 10, _pdf_safe("Secure Coding Assistant - Scan Report"), ln=True, align="C")
     pdf.ln(5)
     
     # Metadata
     pdf.set_font("Helvetica", "", 10)
-    pdf.cell(0, 6, f"Scan Time: {scan_time}", ln=True)
-    pdf.cell(0, 6, f"Lines of Code: {len(code.splitlines())}", ln=True)
-    pdf.cell(0, 6, f"Issues Found: {len(issues)}", ln=True)
+    pdf.cell(0, 6, _pdf_safe(f"Scan Time: {scan_time}"), ln=True)
+    pdf.cell(0, 6, _pdf_safe(f"Lines of Code: {len(code.splitlines())}"), ln=True)
+    pdf.cell(0, 6, _pdf_safe(f"Issues Found: {len(issues)}"), ln=True)
     pdf.ln(5)
     
     # Source Code
     pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, "Source Code", ln=True)
+    pdf.cell(0, 8, _pdf_safe("Source Code"), ln=True)
     pdf.set_font("Courier", "", 8)
     for line in code.splitlines():
-        pdf.cell(0, 4, line[:120], ln=True)
+        pdf.cell(0, 4, _pdf_safe(line[:120]), ln=True)
     pdf.ln(5)
     
     # Issues
     pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, "Issues Detected", ln=True)
+    pdf.cell(0, 8, _pdf_safe("Issues Detected"), ln=True)
     pdf.ln(2)
     
     for i, issue in enumerate(issues, 1):
         pdf.set_font("Helvetica", "B", 10)
-        pdf.cell(0, 6, f"Issue #{i}: {issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}", ln=True)
+        pdf.cell(0, 6, _pdf_safe(f"Issue #{i}: {issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}"), ln=True)
         
         pdf.set_font("Helvetica", "", 9)
-        pdf.cell(0, 5, f"  Line: {issue.get('line', 'N/A')}  |  Severity: {issue.get('severity', 'Low')}  |  Category: {issue.get('category', 'security')}", ln=True)
-        pdf.cell(0, 5, f"  Confidence: {issue.get('confidence', 'N/A')}  |  CWE: {issue.get('cwe_reference', 'N/A')}", ln=True)
+        pdf.cell(0, 5, _pdf_safe(f"  Line: {issue.get('line', 'N/A')}  |  Severity: {issue.get('severity', 'Low')}  |  Category: {issue.get('category', 'security')}"), ln=True)
+        pdf.cell(0, 5, _pdf_safe(f"  Confidence: {issue.get('confidence', 'N/A')}  |  CWE: {issue.get('cwe_reference', 'N/A')}"), ln=True)
         
         if issue.get("snippet"):
             pdf.set_font("Courier", "", 8)
             for line in issue["snippet"].splitlines():
-                pdf.cell(0, 4, f"  {line[:100]}", ln=True)
+                pdf.cell(0, 4, _pdf_safe(f"  {line[:100]}"), ln=True)
         
         if issue.get("message"):
             pdf.set_font("Helvetica", "I", 9)
-            pdf.multi_cell(0, 5, f"  Detail: {issue['message']}")
+            pdf.multi_cell(0, 5, _pdf_safe(f"  Detail: {issue['message']}"))
         
         if issue.get("explanation"):
             pdf.set_font("Helvetica", "B", 9)
-            pdf.cell(0, 5, "  Explanation:", ln=True)
+            pdf.cell(0, 5, _pdf_safe("  Explanation:"), ln=True)
             pdf.set_font("Helvetica", "", 9)
-            pdf.multi_cell(0, 5, f"  {issue['explanation']}")
+            pdf.multi_cell(0, 5, _pdf_safe(f"  {issue['explanation']}"))
         
         if issue.get("secure_rewrite"):
             pdf.set_font("Helvetica", "B", 9)
-            pdf.cell(0, 5, "  Secure Rewrite:", ln=True)
+            pdf.cell(0, 5, _pdf_safe("  Secure Rewrite:"), ln=True)
             pdf.set_font("Courier", "", 8)
             for line in issue["secure_rewrite"].splitlines():
-                pdf.cell(0, 4, f"  {line[:100]}", ln=True)
+                pdf.cell(0, 4, _pdf_safe(f"  {line[:100]}"), ln=True)
         
         pdf.ln(3)
     

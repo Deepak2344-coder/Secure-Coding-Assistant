@@ -30,3 +30,9 @@ chroma_data/
 # Benchmark outputs
 *.csv
 *.html
+
+# Server / app logs
+*.log
+server_*.log
+svr_*.log
+streamlit_*.log

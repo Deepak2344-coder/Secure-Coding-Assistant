@@ -3,6 +3,7 @@ import requests
 import json
 import difflib
 import base64
+import html
 from datetime import datetime
 from io import BytesIO
 import os
@@ -69,12 +70,16 @@ st.markdown("""
         font-family: 'Monospace', monospace;
         font-size: 0.85rem;
         line-height: 1.5;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
     }
     .diff-line { white-space: pre-wrap; font-family: monospace; }
-    .diff-added { background-color: #dcfce7; }
-    .diff-removed { background-color: #fee2e2; }
-    .diff-unchanged { background-color: transparent; }
-    .diff-header { background-color: #f1f5f9; font-weight: bold; }
+    .diff-removed { background-color: #dc2626; color: #ffffff; }
+    .diff-added { background-color: #4ade80; color: #ffffff; }
+    .diff-unchanged { background-color: #ffffff; color: #1e293b; }
+    .diff-header { background-color: #1e293b; color: #ffffff; font-weight: bold; }
+    .diff-legend { font-size: 0.8rem; margin-bottom: 0.5rem; }
     .tooltipped { position: relative; cursor: help; }
     .tooltipped::after {
         content: attr(data-tooltip);
@@ -212,40 +217,75 @@ def render_category_badge(category: str) -> str:
     return f'<span class="category-badge tooltipped" data-tooltip="{config["tooltip"]}">{config["icon"]} {config["label"]}</span>'
 
 def generate_diff(original: str, modified: str) -> str:
-    """Generate a side-by-side diff HTML between original and modified code."""
+    """Generate a side-by-side diff HTML between original and modified code.
+
+    Design: white canvas for unchanged lines; solid red with white text for
+    the vulnerable ("wrong") lines; solid light green with white text for the
+    secure ("right") rewrite lines.
+    """
     original_lines = original.splitlines(keepends=True)
     modified_lines = modified.splitlines(keepends=True)
     
     diff = difflib.SequenceMatcher(None, original_lines, modified_lines)
     
     html_parts = ['<div class="diff-container">']
+    html_parts.append(
+        '<div class="diff-legend">'
+        '<span style="display:inline-block;width:12px;height:12px;background:#dc2626;vertical-align:middle;margin-right:4px;border-radius:2px;"></span>'
+        'Vulnerable (original) &nbsp;&nbsp; '
+        '<span style="display:inline-block;width:12px;height:12px;background:#4ade80;vertical-align:middle;margin-right:4px;border-radius:2px;"></span>'
+        'Secure rewrite'
+        '</div>'
+    )
     html_parts.append('<table style="width: 100%; border-collapse: collapse; font-family: monospace; font-size: 0.85rem;">')
-    html_parts.append('<thead><tr><th style="width: 50%; padding: 4px 8px; text-align: left; border-bottom: 1px solid #e2e8f0;">Original</th><th style="width: 50%; padding: 4px 8px; text-align: left; border-bottom: 1px solid #e2e8f0;">Secure Rewrite</th></tr></thead>')
+    html_parts.append(
+        '<thead><tr>'
+        '<th class="diff-header" style="width: 50%; padding: 6px 10px; text-align: left;">🔴 Original (Vulnerable)</th>'
+        '<th class="diff-header" style="width: 50%; padding: 6px 10px; text-align: left;">🟢 Secure Rewrite</th>'
+        '</tr></thead>'
+    )
     html_parts.append('<tbody>')
+    
+    cell_style = 'padding: 2px 10px; border-right: 1px solid #e2e8f0;'
+    blank_style = 'padding: 2px 10px; background-color: #ffffff;'
     
     for tag, i1, i2, j1, j2 in diff.get_opcodes():
         if tag == 'equal':
             for i in range(i1, i2):
-                line = original_lines[i].rstrip('\n')
-                html_parts.append(f'<tr><td class="diff-line diff-unchanged" style="padding: 2px 8px; border-right: 1px solid #e2e8f0;">{line or "&nbsp;"}</td><td class="diff-line diff-unchanged" style="padding: 2px 8px;">{line or "&nbsp;"}</td></tr>')
+                line = html.escape(original_lines[i].rstrip('\n')) or "&nbsp;"
+                html_parts.append(
+                    f'<tr><td class="diff-line diff-unchanged" style="{cell_style}">{line}</td>'
+                    f'<td class="diff-line diff-unchanged" style="padding: 2px 10px;">{line}</td></tr>'
+                )
         elif tag == 'delete':
             for i in range(i1, i2):
-                line = original_lines[i].rstrip('\n')
-                html_parts.append(f'<tr><td class="diff-line diff-removed" style="padding: 2px 8px; border-right: 1px solid #e2e8f0; background: #fee2e2;">{line or "&nbsp;"}</td><td class="diff-line diff-unchanged" style="padding: 2px 8px; background: #f8fafc;">&nbsp;</td></tr>')
+                line = html.escape(original_lines[i].rstrip('\n')) or "&nbsp;"
+                html_parts.append(
+                    f'<tr><td class="diff-line diff-removed" style="{cell_style}">{line}</td>'
+                    f'<td class="diff-line diff-unchanged" style="{blank_style}">&nbsp;</td></tr>'
+                )
         elif tag == 'insert':
             for j in range(j1, j2):
-                line = modified_lines[j].rstrip('\n')
-                html_parts.append(f'<tr><td class="diff-line diff-unchanged" style="padding: 2px 8px; border-right: 1px solid #e2e8f0; background: #f8fafc;">&nbsp;</td><td class="diff-line diff-added" style="padding: 2px 8px; background: #dcfce7;">{line or "&nbsp;"}</td></tr>')
+                line = html.escape(modified_lines[j].rstrip('\n')) or "&nbsp;"
+                html_parts.append(
+                    f'<tr><td class="diff-line diff-unchanged" style="{cell_style}">&nbsp;</td>'
+                    f'<td class="diff-line diff-added" style="padding: 2px 10px;">{line}</td></tr>'
+                )
         elif tag == 'replace':
             max_lines = max(i2 - i1, j2 - j1)
             for k in range(max_lines):
-                orig_line = original_lines[i1 + k].rstrip('\n') if i1 + k < i2 else ""
-                mod_line = modified_lines[j1 + k].rstrip('\n') if j1 + k < j2 else ""
-                orig_class = "diff-removed" if i1 + k < i2 else "diff-unchanged"
-                mod_class = "diff-added" if j1 + k < j2 else "diff-unchanged"
-                orig_bg = "background: #fee2e2;" if i1 + k < i2 else "background: #f8fafc;"
-                mod_bg = "background: #dcfce7;" if j1 + k < j2 else "background: #f8fafc;"
-                html_parts.append(f'<tr><td class="diff-line {orig_class}" style="padding: 2px 8px; border-right: 1px solid #e2e8f0; {orig_bg}">{orig_line or "&nbsp;"}</td><td class="diff-line {mod_class}" style="padding: 2px 8px; {mod_bg}">{mod_line or "&nbsp;"}</td></tr>')
+                has_orig = i1 + k < i2
+                has_mod = j1 + k < j2
+                orig_line = html.escape(original_lines[i1 + k].rstrip('\n')) if has_orig else "&nbsp;"
+                mod_line = html.escape(modified_lines[j1 + k].rstrip('\n')) if has_mod else "&nbsp;"
+                orig_class = "diff-removed" if has_orig else "diff-unchanged"
+                mod_class = "diff-added" if has_mod else "diff-unchanged"
+                orig_style = cell_style if has_orig else blank_style
+                mod_style = "padding: 2px 10px;" if has_mod else blank_style
+                html_parts.append(
+                    f'<tr><td class="diff-line {orig_class}" style="{orig_style}">{orig_line}</td>'
+                    f'<td class="diff-line {mod_class}" style="{mod_style}">{mod_line}</td></tr>'
+                )
     
     html_parts.append('</tbody></table></div>')
     return ''.join(html_parts)

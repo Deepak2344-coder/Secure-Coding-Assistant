@@ -461,9 +461,10 @@ if uploaded_file:
     uploaded_content = uploaded_file.read().decode("utf-8")
     st.session_state.uploaded_code = uploaded_content
     st.rerun()
-
-# Sync text_area changes back to session state for scan
-st.session_state.uploaded_code = code_input
+else:
+    # Sync text_area changes back to session state for scan
+    # Only when NOT uploading, to avoid overwriting the just-set value
+    st.session_state.uploaded_code = code_input
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:

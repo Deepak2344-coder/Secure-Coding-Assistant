@@ -3,12 +3,13 @@ import re
 
 from backend.schemas import Issue, VulnType, Severity, IssueCategory
 
-SQL_KEYWORDS = ["select", "insert", "update", "delete", "from", "where", "drop", "union"]
+SQL_KEYWORDS = ["select", "insert", "update", "delete", "drop", "union", "create", "alter"]
 
 SUSPICIOUS_VAR_PATTERNS = [
     re.compile(r"(api[_-]?key|apikey)", re.IGNORECASE),
     re.compile(r"(secret|token|password|passwd|credential)", re.IGNORECASE),
     re.compile(r"(auth[_-]?key|authkey)", re.IGNORECASE),
+    re.compile(r"(access[_-]?key|aws[_-]?access[_-]?key|private[_-]?key)", re.IGNORECASE),
 ]
 
 HARDCODED_VALUE_PATTERN = re.compile(r'["\'][A-Za-z0-9_\-/=+]{16,}["\']')
@@ -21,7 +22,7 @@ COMMAND_INJECTION_PATTERNS = [
 ]
 
 XSS_PATTERNS = [
-    re.compile(r'render_template_string\s*\(f["\']'),
+    re.compile(r'render_template_string\s*\((?:\s*f["\']|[^)]*\+)'),
     re.compile(r'{{.*\|safe}}'),
     re.compile(r'{%\s*autoescape\s+false\s*%}'),
     re.compile(r'Markup\s*\(.*\)'),
@@ -65,37 +66,30 @@ def _get_line_snippet(code: str, line_no: int) -> str:
 def _check_sql_injection(code: str) -> list[Issue]:
     issues = []
     lines = code.split("\n")
-    in_sql_context = False
 
     for i, line in enumerate(lines):
         line_lower = line.lower()
         has_sql_keyword = any(
             kw in line_lower for kw in SQL_KEYWORDS
         )
+        if not has_sql_keyword:
+            continue
 
-        if has_sql_keyword:
-            in_sql_context = True
+        has_concat = "+" in line and ('"' in line or "'" in line)
+        has_fstring = 'f"' in line_lower or "f'" in line_lower
+        has_format = ".format(" in line
+        has_percent = re.search(r'%[sdx]["\']\s*%', line)
 
-        if in_sql_context:
-            has_concat = "+" in line and ('"' in line or "'" in line)
-            has_fstring = 'f"' in line_lower or "f'" in line_lower
-            has_format = ".format(" in line
-            has_percent = re.search(r'%\s*\(', line)
-
-            if has_concat or has_fstring or has_format or has_percent:
-                issues.append(
-                    Issue(
-                        line=i + 1,
-                        vuln_type=VulnType.SQL_INJECTION,
-                        snippet=_get_line_snippet(code, i + 1),
-                        confidence="high" if has_fstring else "medium",
-                        severity=Severity.HIGH,
-                    )
+        if has_concat or has_fstring or has_format or has_percent:
+            issues.append(
+                Issue(
+                    line=i + 1,
+                    vuln_type=VulnType.SQL_INJECTION,
+                    snippet=_get_line_snippet(code, i + 1),
+                    confidence="high" if has_fstring else "medium",
+                    severity=Severity.HIGH,
                 )
-                in_sql_context = False
-
-        if line.rstrip().endswith(";"):
-            in_sql_context = False
+            )
 
     return issues
 

@@ -1,0 +1,52 @@
+{
+  "per_type": {
+    "command_injection": {
+      "TP": 72,
+      "FN": 0,
+      "FP": 0,
+      "TN": 5,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "xss": {
+      "TP": 72,
+      "FN": 0,
+      "FP": 1,
+      "TN": 7,
+      "precision": 0.9863,
+      "recall": 1.0,
+      "f1": 0.9931
+    },
+    "sql_injection": {
+      "TP": 72,
+      "FN": 0,
+      "FP": 0,
+      "TN": 8,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "hardcoded_secret": {
+      "TP": 72,
+      "FN": 0,
+      "FP": 0,
+      "TN": 8,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "overall": {
+    "TP": 288,
+    "FN": 0,
+    "FP": 1,
+    "TN": 28,
+    "total_vulnerable": 288,
+    "total_secure": 29,
+    "recall": 1.0,
+    "precision": 0.9965,
+    "f1": 0.9983
+  },
+  "errors": []
+}

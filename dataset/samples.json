@@ -1,0 +1,2538 @@
+[
+  {
+    "id": "sql__v_001",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = '\" + name + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #1"
+  },
+  {
+    "id": "sql__v_002",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = '\" + name + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #2"
+  },
+  {
+    "id": "sql__v_003",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES ('\" + name + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #3"
+  },
+  {
+    "id": "sql__v_004",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = '\" + name + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #4"
+  },
+  {
+    "id": "sql__v_005",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = '\" + name + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #5"
+  },
+  {
+    "id": "sql__v_006",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = '\" + name + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #6"
+  },
+  {
+    "id": "sql__v_007",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT * FROM users WHERE name = {name}\")",
+    "notes": "Templated sql_injection vulnerable sample #7"
+  },
+  {
+    "id": "sql__v_008",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT id FROM accounts WHERE email = {name}\")",
+    "notes": "Templated sql_injection vulnerable sample #8"
+  },
+  {
+    "id": "sql__v_009",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"INSERT INTO logs VALUES ({name}\")",
+    "notes": "Templated sql_injection vulnerable sample #9"
+  },
+  {
+    "id": "sql__v_010",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"DELETE FROM sessions WHERE id = {name}\")",
+    "notes": "Templated sql_injection vulnerable sample #10"
+  },
+  {
+    "id": "sql__v_011",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"UPDATE users SET email = {name}\")",
+    "notes": "Templated sql_injection vulnerable sample #11"
+  },
+  {
+    "id": "sql__v_012",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT * FROM products WHERE cat = {name}\")",
+    "notes": "Templated sql_injection vulnerable sample #12"
+  },
+  {
+    "id": "sql__v_013",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = '{}'\".format(name))",
+    "notes": "Templated sql_injection vulnerable sample #13"
+  },
+  {
+    "id": "sql__v_014",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = '{}'\".format(name))",
+    "notes": "Templated sql_injection vulnerable sample #14"
+  },
+  {
+    "id": "sql__v_015",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES ('{}'\".format(name))",
+    "notes": "Templated sql_injection vulnerable sample #15"
+  },
+  {
+    "id": "sql__v_016",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = '{}'\".format(name))",
+    "notes": "Templated sql_injection vulnerable sample #16"
+  },
+  {
+    "id": "sql__v_017",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = '{}'\".format(name))",
+    "notes": "Templated sql_injection vulnerable sample #17"
+  },
+  {
+    "id": "sql__v_018",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = '{}'\".format(name))",
+    "notes": "Templated sql_injection vulnerable sample #18"
+  },
+  {
+    "id": "sql__v_019",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = %s\" % name)",
+    "notes": "Templated sql_injection vulnerable sample #19"
+  },
+  {
+    "id": "sql__v_020",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = %s\" % name)",
+    "notes": "Templated sql_injection vulnerable sample #20"
+  },
+  {
+    "id": "sql__v_021",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES (%s\" % name)",
+    "notes": "Templated sql_injection vulnerable sample #21"
+  },
+  {
+    "id": "sql__v_022",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = %s\" % name)",
+    "notes": "Templated sql_injection vulnerable sample #22"
+  },
+  {
+    "id": "sql__v_023",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = %s\" % name)",
+    "notes": "Templated sql_injection vulnerable sample #23"
+  },
+  {
+    "id": "sql__v_024",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = %s\" % name)",
+    "notes": "Templated sql_injection vulnerable sample #24"
+  },
+  {
+    "id": "sql__v_025",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = '\" + username + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #25"
+  },
+  {
+    "id": "sql__v_026",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = '\" + username + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #26"
+  },
+  {
+    "id": "sql__v_027",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES ('\" + username + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #27"
+  },
+  {
+    "id": "sql__v_028",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = '\" + username + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #28"
+  },
+  {
+    "id": "sql__v_029",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = '\" + username + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #29"
+  },
+  {
+    "id": "sql__v_030",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = '\" + username + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #30"
+  },
+  {
+    "id": "sql__v_031",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT * FROM users WHERE name = {username}\")",
+    "notes": "Templated sql_injection vulnerable sample #31"
+  },
+  {
+    "id": "sql__v_032",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT id FROM accounts WHERE email = {username}\")",
+    "notes": "Templated sql_injection vulnerable sample #32"
+  },
+  {
+    "id": "sql__v_033",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"INSERT INTO logs VALUES ({username}\")",
+    "notes": "Templated sql_injection vulnerable sample #33"
+  },
+  {
+    "id": "sql__v_034",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"DELETE FROM sessions WHERE id = {username}\")",
+    "notes": "Templated sql_injection vulnerable sample #34"
+  },
+  {
+    "id": "sql__v_035",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"UPDATE users SET email = {username}\")",
+    "notes": "Templated sql_injection vulnerable sample #35"
+  },
+  {
+    "id": "sql__v_036",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT * FROM products WHERE cat = {username}\")",
+    "notes": "Templated sql_injection vulnerable sample #36"
+  },
+  {
+    "id": "sql__v_037",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = '{}'\".format(username))",
+    "notes": "Templated sql_injection vulnerable sample #37"
+  },
+  {
+    "id": "sql__v_038",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = '{}'\".format(username))",
+    "notes": "Templated sql_injection vulnerable sample #38"
+  },
+  {
+    "id": "sql__v_039",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES ('{}'\".format(username))",
+    "notes": "Templated sql_injection vulnerable sample #39"
+  },
+  {
+    "id": "sql__v_040",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = '{}'\".format(username))",
+    "notes": "Templated sql_injection vulnerable sample #40"
+  },
+  {
+    "id": "sql__v_041",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = '{}'\".format(username))",
+    "notes": "Templated sql_injection vulnerable sample #41"
+  },
+  {
+    "id": "sql__v_042",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = '{}'\".format(username))",
+    "notes": "Templated sql_injection vulnerable sample #42"
+  },
+  {
+    "id": "sql__v_043",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = %s\" % username)",
+    "notes": "Templated sql_injection vulnerable sample #43"
+  },
+  {
+    "id": "sql__v_044",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = %s\" % username)",
+    "notes": "Templated sql_injection vulnerable sample #44"
+  },
+  {
+    "id": "sql__v_045",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES (%s\" % username)",
+    "notes": "Templated sql_injection vulnerable sample #45"
+  },
+  {
+    "id": "sql__v_046",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = %s\" % username)",
+    "notes": "Templated sql_injection vulnerable sample #46"
+  },
+  {
+    "id": "sql__v_047",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = %s\" % username)",
+    "notes": "Templated sql_injection vulnerable sample #47"
+  },
+  {
+    "id": "sql__v_048",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(username):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = %s\" % username)",
+    "notes": "Templated sql_injection vulnerable sample #48"
+  },
+  {
+    "id": "sql__v_049",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = '\" + user_input + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #49"
+  },
+  {
+    "id": "sql__v_050",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = '\" + user_input + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #50"
+  },
+  {
+    "id": "sql__v_051",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES ('\" + user_input + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #51"
+  },
+  {
+    "id": "sql__v_052",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = '\" + user_input + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #52"
+  },
+  {
+    "id": "sql__v_053",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = '\" + user_input + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #53"
+  },
+  {
+    "id": "sql__v_054",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = '\" + user_input + \"'\")",
+    "notes": "Templated sql_injection vulnerable sample #54"
+  },
+  {
+    "id": "sql__v_055",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT * FROM users WHERE name = {user_input}\")",
+    "notes": "Templated sql_injection vulnerable sample #55"
+  },
+  {
+    "id": "sql__v_056",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT id FROM accounts WHERE email = {user_input}\")",
+    "notes": "Templated sql_injection vulnerable sample #56"
+  },
+  {
+    "id": "sql__v_057",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"INSERT INTO logs VALUES ({user_input}\")",
+    "notes": "Templated sql_injection vulnerable sample #57"
+  },
+  {
+    "id": "sql__v_058",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"DELETE FROM sessions WHERE id = {user_input}\")",
+    "notes": "Templated sql_injection vulnerable sample #58"
+  },
+  {
+    "id": "sql__v_059",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"UPDATE users SET email = {user_input}\")",
+    "notes": "Templated sql_injection vulnerable sample #59"
+  },
+  {
+    "id": "sql__v_060",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(f\"SELECT * FROM products WHERE cat = {user_input}\")",
+    "notes": "Templated sql_injection vulnerable sample #60"
+  },
+  {
+    "id": "sql__v_061",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = '{}'\".format(user_input))",
+    "notes": "Templated sql_injection vulnerable sample #61"
+  },
+  {
+    "id": "sql__v_062",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = '{}'\".format(user_input))",
+    "notes": "Templated sql_injection vulnerable sample #62"
+  },
+  {
+    "id": "sql__v_063",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES ('{}'\".format(user_input))",
+    "notes": "Templated sql_injection vulnerable sample #63"
+  },
+  {
+    "id": "sql__v_064",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = '{}'\".format(user_input))",
+    "notes": "Templated sql_injection vulnerable sample #64"
+  },
+  {
+    "id": "sql__v_065",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = '{}'\".format(user_input))",
+    "notes": "Templated sql_injection vulnerable sample #65"
+  },
+  {
+    "id": "sql__v_066",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = '{}'\".format(user_input))",
+    "notes": "Templated sql_injection vulnerable sample #66"
+  },
+  {
+    "id": "sql__v_067",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = %s\" % user_input)",
+    "notes": "Templated sql_injection vulnerable sample #67"
+  },
+  {
+    "id": "sql__v_068",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT id FROM accounts WHERE email = %s\" % user_input)",
+    "notes": "Templated sql_injection vulnerable sample #68"
+  },
+  {
+    "id": "sql__v_069",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"INSERT INTO logs VALUES (%s\" % user_input)",
+    "notes": "Templated sql_injection vulnerable sample #69"
+  },
+  {
+    "id": "sql__v_070",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"DELETE FROM sessions WHERE id = %s\" % user_input)",
+    "notes": "Templated sql_injection vulnerable sample #70"
+  },
+  {
+    "id": "sql__v_071",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"UPDATE users SET email = %s\" % user_input)",
+    "notes": "Templated sql_injection vulnerable sample #71"
+  },
+  {
+    "id": "sql__v_072",
+    "vuln_type": "sql_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "sql_injection",
+    "code": "import sqlite3\ndef get_user(user_input):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM products WHERE cat = %s\" % user_input)",
+    "notes": "Templated sql_injection vulnerable sample #72"
+  },
+  {
+    "id": "sql__s_001",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import sqlite3\ndef get_user(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = ?\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #1"
+  },
+  {
+    "id": "sql__s_002",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import sqlite3\ndef login(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = ?\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #2"
+  },
+  {
+    "id": "sql__s_003",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import sqlite3\ndef fetch(name):\n    conn = sqlite3.connect('app.db')\n    conn.execute(\"SELECT * FROM users WHERE name = ?\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #3"
+  },
+  {
+    "id": "sql__s_004",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import psycopg2\ndef get_user(name):\n    conn = psycopg2.connect()\n    cur = conn.cursor()\n    cur.execute(\"SELECT * FROM users WHERE name = %s\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #4"
+  },
+  {
+    "id": "sql__s_005",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import psycopg2\ndef login(name):\n    conn = psycopg2.connect()\n    cur = conn.cursor()\n    cur.execute(\"SELECT * FROM users WHERE name = %s\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #5"
+  },
+  {
+    "id": "sql__s_006",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import psycopg2\ndef fetch(name):\n    conn = psycopg2.connect()\n    cur = conn.cursor()\n    cur.execute(\"SELECT * FROM users WHERE name = %s\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #6"
+  },
+  {
+    "id": "sql__s_007",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import pymysql\ndef get_user(name):\n    conn = pymysql.connect()\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT * FROM users WHERE name = %s\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #7"
+  },
+  {
+    "id": "sql__s_008",
+    "vuln_type": "sql_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import pymysql\ndef login(name):\n    conn = pymysql.connect()\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT * FROM users WHERE name = %s\", (name,))",
+    "notes": "Templated sql_injection secure/patched sample #8"
+  },
+  {
+    "id": "comm_v_001",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(host):\n    os.system(\"ping -c 1 \" + host)",
+    "notes": "Templated command_injection vulnerable sample #1"
+  },
+  {
+    "id": "comm_v_002",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(user_input):\n    os.system(\"ping -c 1 \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #2"
+  },
+  {
+    "id": "comm_v_003",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(path):\n    os.system(\"ping -c 1 \" + path)",
+    "notes": "Templated command_injection vulnerable sample #3"
+  },
+  {
+    "id": "comm_v_004",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(filename):\n    os.system(\"ping -c 1 \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #4"
+  },
+  {
+    "id": "comm_v_005",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(arg):\n    os.system(\"ping -c 1 \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #5"
+  },
+  {
+    "id": "comm_v_006",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(host):\n    os.system(\"ping -c 1 \" + host)",
+    "notes": "Templated command_injection vulnerable sample #6"
+  },
+  {
+    "id": "comm_v_007",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(user_input):\n    os.system(\"ping -c 1 \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #7"
+  },
+  {
+    "id": "comm_v_008",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(path):\n    os.system(\"ping -c 1 \" + path)",
+    "notes": "Templated command_injection vulnerable sample #8"
+  },
+  {
+    "id": "comm_v_009",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(filename):\n    os.system(\"ping -c 1 \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #9"
+  },
+  {
+    "id": "comm_v_010",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(arg):\n    os.system(\"ping -c 1 \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #10"
+  },
+  {
+    "id": "comm_v_011",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(host):\n    os.system(\"ping -c 1 \" + host)",
+    "notes": "Templated command_injection vulnerable sample #11"
+  },
+  {
+    "id": "comm_v_012",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(user_input):\n    os.system(\"ping -c 1 \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #12"
+  },
+  {
+    "id": "comm_v_013",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(path):\n    os.system(\"ping -c 1 \" + path)",
+    "notes": "Templated command_injection vulnerable sample #13"
+  },
+  {
+    "id": "comm_v_014",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(filename):\n    os.system(\"ping -c 1 \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #14"
+  },
+  {
+    "id": "comm_v_015",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(arg):\n    os.system(\"ping -c 1 \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #15"
+  },
+  {
+    "id": "comm_v_016",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(host):\n    os.system(\"ping -c 1 \" + host)",
+    "notes": "Templated command_injection vulnerable sample #16"
+  },
+  {
+    "id": "comm_v_017",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(user_input):\n    os.system(\"ping -c 1 \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #17"
+  },
+  {
+    "id": "comm_v_018",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(path):\n    os.system(\"ping -c 1 \" + path)",
+    "notes": "Templated command_injection vulnerable sample #18"
+  },
+  {
+    "id": "comm_v_019",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(filename):\n    os.system(\"ping -c 1 \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #19"
+  },
+  {
+    "id": "comm_v_020",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(arg):\n    os.system(\"ping -c 1 \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #20"
+  },
+  {
+    "id": "comm_v_021",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(host):\n    os.system(\"ping -c 1 \" + host)",
+    "notes": "Templated command_injection vulnerable sample #21"
+  },
+  {
+    "id": "comm_v_022",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(user_input):\n    os.system(\"ping -c 1 \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #22"
+  },
+  {
+    "id": "comm_v_023",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(path):\n    os.system(\"ping -c 1 \" + path)",
+    "notes": "Templated command_injection vulnerable sample #23"
+  },
+  {
+    "id": "comm_v_024",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(filename):\n    os.system(\"ping -c 1 \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #24"
+  },
+  {
+    "id": "comm_v_025",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(arg):\n    os.system(\"ping -c 1 \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #25"
+  },
+  {
+    "id": "comm_v_026",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(host):\n    os.system(f\"ping -c 1 host\")",
+    "notes": "Templated command_injection vulnerable sample #26"
+  },
+  {
+    "id": "comm_v_027",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(user_input):\n    os.system(f\"ping -c 1 user_input\")",
+    "notes": "Templated command_injection vulnerable sample #27"
+  },
+  {
+    "id": "comm_v_028",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(path):\n    os.system(f\"ping -c 1 path\")",
+    "notes": "Templated command_injection vulnerable sample #28"
+  },
+  {
+    "id": "comm_v_029",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(filename):\n    os.system(f\"ping -c 1 filename\")",
+    "notes": "Templated command_injection vulnerable sample #29"
+  },
+  {
+    "id": "comm_v_030",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(arg):\n    os.system(f\"ping -c 1 arg\")",
+    "notes": "Templated command_injection vulnerable sample #30"
+  },
+  {
+    "id": "comm_v_031",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(host):\n    os.system(f\"ping -c 1 host\")",
+    "notes": "Templated command_injection vulnerable sample #31"
+  },
+  {
+    "id": "comm_v_032",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(user_input):\n    os.system(f\"ping -c 1 user_input\")",
+    "notes": "Templated command_injection vulnerable sample #32"
+  },
+  {
+    "id": "comm_v_033",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(path):\n    os.system(f\"ping -c 1 path\")",
+    "notes": "Templated command_injection vulnerable sample #33"
+  },
+  {
+    "id": "comm_v_034",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(filename):\n    os.system(f\"ping -c 1 filename\")",
+    "notes": "Templated command_injection vulnerable sample #34"
+  },
+  {
+    "id": "comm_v_035",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(arg):\n    os.system(f\"ping -c 1 arg\")",
+    "notes": "Templated command_injection vulnerable sample #35"
+  },
+  {
+    "id": "comm_v_036",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(host):\n    os.system(f\"ping -c 1 host\")",
+    "notes": "Templated command_injection vulnerable sample #36"
+  },
+  {
+    "id": "comm_v_037",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(user_input):\n    os.system(f\"ping -c 1 user_input\")",
+    "notes": "Templated command_injection vulnerable sample #37"
+  },
+  {
+    "id": "comm_v_038",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(path):\n    os.system(f\"ping -c 1 path\")",
+    "notes": "Templated command_injection vulnerable sample #38"
+  },
+  {
+    "id": "comm_v_039",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(filename):\n    os.system(f\"ping -c 1 filename\")",
+    "notes": "Templated command_injection vulnerable sample #39"
+  },
+  {
+    "id": "comm_v_040",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(arg):\n    os.system(f\"ping -c 1 arg\")",
+    "notes": "Templated command_injection vulnerable sample #40"
+  },
+  {
+    "id": "comm_v_041",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(host):\n    os.system(f\"ping -c 1 host\")",
+    "notes": "Templated command_injection vulnerable sample #41"
+  },
+  {
+    "id": "comm_v_042",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(user_input):\n    os.system(f\"ping -c 1 user_input\")",
+    "notes": "Templated command_injection vulnerable sample #42"
+  },
+  {
+    "id": "comm_v_043",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(path):\n    os.system(f\"ping -c 1 path\")",
+    "notes": "Templated command_injection vulnerable sample #43"
+  },
+  {
+    "id": "comm_v_044",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(filename):\n    os.system(f\"ping -c 1 filename\")",
+    "notes": "Templated command_injection vulnerable sample #44"
+  },
+  {
+    "id": "comm_v_045",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(arg):\n    os.system(f\"ping -c 1 arg\")",
+    "notes": "Templated command_injection vulnerable sample #45"
+  },
+  {
+    "id": "comm_v_046",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(host):\n    os.system(f\"ping -c 1 host\")",
+    "notes": "Templated command_injection vulnerable sample #46"
+  },
+  {
+    "id": "comm_v_047",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(user_input):\n    os.system(f\"ping -c 1 user_input\")",
+    "notes": "Templated command_injection vulnerable sample #47"
+  },
+  {
+    "id": "comm_v_048",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(path):\n    os.system(f\"ping -c 1 path\")",
+    "notes": "Templated command_injection vulnerable sample #48"
+  },
+  {
+    "id": "comm_v_049",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(filename):\n    os.system(f\"ping -c 1 filename\")",
+    "notes": "Templated command_injection vulnerable sample #49"
+  },
+  {
+    "id": "comm_v_050",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(arg):\n    os.system(f\"ping -c 1 arg\")",
+    "notes": "Templated command_injection vulnerable sample #50"
+  },
+  {
+    "id": "comm_v_051",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(host):\n    os.system(\"echo \" + host)",
+    "notes": "Templated command_injection vulnerable sample #51"
+  },
+  {
+    "id": "comm_v_052",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(user_input):\n    os.system(\"echo \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #52"
+  },
+  {
+    "id": "comm_v_053",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(path):\n    os.system(\"echo \" + path)",
+    "notes": "Templated command_injection vulnerable sample #53"
+  },
+  {
+    "id": "comm_v_054",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(filename):\n    os.system(\"echo \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #54"
+  },
+  {
+    "id": "comm_v_055",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef ping(arg):\n    os.system(\"echo \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #55"
+  },
+  {
+    "id": "comm_v_056",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(host):\n    os.system(\"echo \" + host)",
+    "notes": "Templated command_injection vulnerable sample #56"
+  },
+  {
+    "id": "comm_v_057",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(user_input):\n    os.system(\"echo \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #57"
+  },
+  {
+    "id": "comm_v_058",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(path):\n    os.system(\"echo \" + path)",
+    "notes": "Templated command_injection vulnerable sample #58"
+  },
+  {
+    "id": "comm_v_059",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(filename):\n    os.system(\"echo \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #59"
+  },
+  {
+    "id": "comm_v_060",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef run_cmd(arg):\n    os.system(\"echo \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #60"
+  },
+  {
+    "id": "comm_v_061",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(host):\n    os.system(\"echo \" + host)",
+    "notes": "Templated command_injection vulnerable sample #61"
+  },
+  {
+    "id": "comm_v_062",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(user_input):\n    os.system(\"echo \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #62"
+  },
+  {
+    "id": "comm_v_063",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(path):\n    os.system(\"echo \" + path)",
+    "notes": "Templated command_injection vulnerable sample #63"
+  },
+  {
+    "id": "comm_v_064",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(filename):\n    os.system(\"echo \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #64"
+  },
+  {
+    "id": "comm_v_065",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef execute(arg):\n    os.system(\"echo \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #65"
+  },
+  {
+    "id": "comm_v_066",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(host):\n    os.system(\"echo \" + host)",
+    "notes": "Templated command_injection vulnerable sample #66"
+  },
+  {
+    "id": "comm_v_067",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(user_input):\n    os.system(\"echo \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #67"
+  },
+  {
+    "id": "comm_v_068",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(path):\n    os.system(\"echo \" + path)",
+    "notes": "Templated command_injection vulnerable sample #68"
+  },
+  {
+    "id": "comm_v_069",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(filename):\n    os.system(\"echo \" + filename)",
+    "notes": "Templated command_injection vulnerable sample #69"
+  },
+  {
+    "id": "comm_v_070",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef list_dir(arg):\n    os.system(\"echo \" + arg)",
+    "notes": "Templated command_injection vulnerable sample #70"
+  },
+  {
+    "id": "comm_v_071",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(host):\n    os.system(\"echo \" + host)",
+    "notes": "Templated command_injection vulnerable sample #71"
+  },
+  {
+    "id": "comm_v_072",
+    "vuln_type": "command_injection",
+    "label": "vulnerable",
+    "expected_vuln_type": "command_injection",
+    "code": "import os\ndef do_backup(user_input):\n    os.system(\"echo \" + user_input)",
+    "notes": "Templated command_injection vulnerable sample #72"
+  },
+  {
+    "id": "comm_s_001",
+    "vuln_type": "command_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import subprocess\ndef ping(host):\n    subprocess.run(['ping', '-c', '1', host])",
+    "notes": "Templated command_injection secure/patched sample #1"
+  },
+  {
+    "id": "comm_s_002",
+    "vuln_type": "command_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import subprocess\ndef run_cmd(arg):\n    subprocess.run(['ls', '-la', arg])",
+    "notes": "Templated command_injection secure/patched sample #2"
+  },
+  {
+    "id": "comm_s_003",
+    "vuln_type": "command_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import subprocess\ndef list_dir(path):\n    subprocess.run(['dir', path], shell=False)",
+    "notes": "Templated command_injection secure/patched sample #3"
+  },
+  {
+    "id": "comm_s_004",
+    "vuln_type": "command_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import subprocess\ndef do_backup(filename):\n    subprocess.run(['tar', '-czf', 'backup.tar.gz', filename])",
+    "notes": "Templated command_injection secure/patched sample #4"
+  },
+  {
+    "id": "comm_s_005",
+    "vuln_type": "command_injection",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import subprocess\ndef execute(cmd_args):\n    subprocess.run(cmd_args)",
+    "notes": "Templated command_injection secure/patched sample #5"
+  },
+  {
+    "id": "hard_v_001",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #1"
+  },
+  {
+    "id": "hard_v_002",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #2"
+  },
+  {
+    "id": "hard_v_003",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #3"
+  },
+  {
+    "id": "hard_v_004",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #4"
+  },
+  {
+    "id": "hard_v_005",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #5"
+  },
+  {
+    "id": "hard_v_006",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #6"
+  },
+  {
+    "id": "hard_v_007",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #7"
+  },
+  {
+    "id": "hard_v_008",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "API_KEY = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #8"
+  },
+  {
+    "id": "hard_v_009",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #9"
+  },
+  {
+    "id": "hard_v_010",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #10"
+  },
+  {
+    "id": "hard_v_011",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #11"
+  },
+  {
+    "id": "hard_v_012",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #12"
+  },
+  {
+    "id": "hard_v_013",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #13"
+  },
+  {
+    "id": "hard_v_014",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #14"
+  },
+  {
+    "id": "hard_v_015",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #15"
+  },
+  {
+    "id": "hard_v_016",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "api_key = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #16"
+  },
+  {
+    "id": "hard_v_017",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #17"
+  },
+  {
+    "id": "hard_v_018",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #18"
+  },
+  {
+    "id": "hard_v_019",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #19"
+  },
+  {
+    "id": "hard_v_020",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #20"
+  },
+  {
+    "id": "hard_v_021",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #21"
+  },
+  {
+    "id": "hard_v_022",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #22"
+  },
+  {
+    "id": "hard_v_023",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #23"
+  },
+  {
+    "id": "hard_v_024",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "SECRET_KEY = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #24"
+  },
+  {
+    "id": "hard_v_025",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #25"
+  },
+  {
+    "id": "hard_v_026",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #26"
+  },
+  {
+    "id": "hard_v_027",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #27"
+  },
+  {
+    "id": "hard_v_028",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #28"
+  },
+  {
+    "id": "hard_v_029",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #29"
+  },
+  {
+    "id": "hard_v_030",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #30"
+  },
+  {
+    "id": "hard_v_031",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #31"
+  },
+  {
+    "id": "hard_v_032",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "secret_token = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #32"
+  },
+  {
+    "id": "hard_v_033",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #33"
+  },
+  {
+    "id": "hard_v_034",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #34"
+  },
+  {
+    "id": "hard_v_035",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #35"
+  },
+  {
+    "id": "hard_v_036",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #36"
+  },
+  {
+    "id": "hard_v_037",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #37"
+  },
+  {
+    "id": "hard_v_038",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #38"
+  },
+  {
+    "id": "hard_v_039",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #39"
+  },
+  {
+    "id": "hard_v_040",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "DB_PASSWORD = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #40"
+  },
+  {
+    "id": "hard_v_041",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #41"
+  },
+  {
+    "id": "hard_v_042",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #42"
+  },
+  {
+    "id": "hard_v_043",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #43"
+  },
+  {
+    "id": "hard_v_044",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #44"
+  },
+  {
+    "id": "hard_v_045",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #45"
+  },
+  {
+    "id": "hard_v_046",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #46"
+  },
+  {
+    "id": "hard_v_047",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #47"
+  },
+  {
+    "id": "hard_v_048",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "password = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #48"
+  },
+  {
+    "id": "hard_v_049",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #49"
+  },
+  {
+    "id": "hard_v_050",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #50"
+  },
+  {
+    "id": "hard_v_051",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #51"
+  },
+  {
+    "id": "hard_v_052",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #52"
+  },
+  {
+    "id": "hard_v_053",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #53"
+  },
+  {
+    "id": "hard_v_054",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #54"
+  },
+  {
+    "id": "hard_v_055",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #55"
+  },
+  {
+    "id": "hard_v_056",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "auth_key = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #56"
+  },
+  {
+    "id": "hard_v_057",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #57"
+  },
+  {
+    "id": "hard_v_058",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #58"
+  },
+  {
+    "id": "hard_v_059",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #59"
+  },
+  {
+    "id": "hard_v_060",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #60"
+  },
+  {
+    "id": "hard_v_061",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #61"
+  },
+  {
+    "id": "hard_v_062",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #62"
+  },
+  {
+    "id": "hard_v_063",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #63"
+  },
+  {
+    "id": "hard_v_064",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "github_token = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #64"
+  },
+  {
+    "id": "hard_v_065",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"sk-2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #65"
+  },
+  {
+    "id": "hard_v_066",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"super_secret_p@ssw0rd_2024\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #66"
+  },
+  {
+    "id": "hard_v_067",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"ghp_1234567890abcdefghijklmnopqrstuvwxyz\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #67"
+  },
+  {
+    "id": "hard_v_068",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"AKIAIOSFODNN7EXAMPLE3PLUS\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #68"
+  },
+  {
+    "id": "hard_v_069",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"django-insecure-abc123def456ghi789jkl\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #69"
+  },
+  {
+    "id": "hard_v_070",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"bearer_abcdef1234567890abcdef1234567890\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #70"
+  },
+  {
+    "id": "hard_v_071",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"token_9f8e7d6c5b4a39281706f5e4d3c2b1a0\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #71"
+  },
+  {
+    "id": "hard_v_072",
+    "vuln_type": "hardcoded_secret",
+    "label": "vulnerable",
+    "expected_vuln_type": "hardcoded_secret",
+    "code": "aws_access_key = \"postgres://user:Pa55w0rd@localhost:5432/db\"",
+    "notes": "Templated hardcoded_secret vulnerable sample #72"
+  },
+  {
+    "id": "hard_s_001",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import os\nAPI_KEY = os.environ.get('API_KEY')",
+    "notes": "Templated hardcoded_secret secure/patched sample #1"
+  },
+  {
+    "id": "hard_s_002",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import os\nDB_PASSWORD = os.getenv('DB_PASSWORD')",
+    "notes": "Templated hardcoded_secret secure/patched sample #2"
+  },
+  {
+    "id": "hard_s_003",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import os\nSECRET_KEY = os.environ['SECRET_KEY']",
+    "notes": "Templated hardcoded_secret secure/patched sample #3"
+  },
+  {
+    "id": "hard_s_004",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from config import settings\napi_token = settings.API_TOKEN",
+    "notes": "Templated hardcoded_secret secure/patched sample #4"
+  },
+  {
+    "id": "hard_s_005",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "import os\naws_key = os.environ.get('AWS_ACCESS_KEY_ID')",
+    "notes": "Templated hardcoded_secret secure/patched sample #5"
+  },
+  {
+    "id": "hard_s_006",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "API_KEY = load_secret('api_key')  # from vault",
+    "notes": "Templated hardcoded_secret secure/patched sample #6"
+  },
+  {
+    "id": "hard_s_007",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "password = get_credentials('db')['password']",
+    "notes": "Templated hardcoded_secret secure/patched sample #7"
+  },
+  {
+    "id": "hard_s_008",
+    "vuln_type": "hardcoded_secret",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "token = keyring.get_password('svc', 'token')",
+    "notes": "Templated hardcoded_secret secure/patched sample #8"
+  },
+  {
+    "id": "xss_v_001",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(username):\n    return render_template_string(f\"<h1>Welcome username!</h1>\")",
+    "notes": "Templated xss vulnerable sample #1"
+  },
+  {
+    "id": "xss_v_002",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(msg):\n    return render_template_string(f\"<h1>Welcome msg!</h1>\")",
+    "notes": "Templated xss vulnerable sample #2"
+  },
+  {
+    "id": "xss_v_003",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(query):\n    return render_template_string(f\"<h1>Welcome query!</h1>\")",
+    "notes": "Templated xss vulnerable sample #3"
+  },
+  {
+    "id": "xss_v_004",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(user_input):\n    return render_template_string(f\"<h1>Welcome user_input!</h1>\")",
+    "notes": "Templated xss vulnerable sample #4"
+  },
+  {
+    "id": "xss_v_005",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(comment):\n    return render_template_string(f\"<h1>Welcome comment!</h1>\")",
+    "notes": "Templated xss vulnerable sample #5"
+  },
+  {
+    "id": "xss_v_006",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(username):\n    return render_template_string(f\"<h1>Welcome username!</h1>\")",
+    "notes": "Templated xss vulnerable sample #6"
+  },
+  {
+    "id": "xss_v_007",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(msg):\n    return render_template_string(f\"<h1>Welcome msg!</h1>\")",
+    "notes": "Templated xss vulnerable sample #7"
+  },
+  {
+    "id": "xss_v_008",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(query):\n    return render_template_string(f\"<h1>Welcome query!</h1>\")",
+    "notes": "Templated xss vulnerable sample #8"
+  },
+  {
+    "id": "xss_v_009",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(user_input):\n    return render_template_string(f\"<h1>Welcome user_input!</h1>\")",
+    "notes": "Templated xss vulnerable sample #9"
+  },
+  {
+    "id": "xss_v_010",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(comment):\n    return render_template_string(f\"<h1>Welcome comment!</h1>\")",
+    "notes": "Templated xss vulnerable sample #10"
+  },
+  {
+    "id": "xss_v_011",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(username):\n    return render_template_string(f\"<h1>Welcome username!</h1>\")",
+    "notes": "Templated xss vulnerable sample #11"
+  },
+  {
+    "id": "xss_v_012",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(msg):\n    return render_template_string(f\"<h1>Welcome msg!</h1>\")",
+    "notes": "Templated xss vulnerable sample #12"
+  },
+  {
+    "id": "xss_v_013",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(query):\n    return render_template_string(f\"<h1>Welcome query!</h1>\")",
+    "notes": "Templated xss vulnerable sample #13"
+  },
+  {
+    "id": "xss_v_014",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(user_input):\n    return render_template_string(f\"<h1>Welcome user_input!</h1>\")",
+    "notes": "Templated xss vulnerable sample #14"
+  },
+  {
+    "id": "xss_v_015",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(comment):\n    return render_template_string(f\"<h1>Welcome comment!</h1>\")",
+    "notes": "Templated xss vulnerable sample #15"
+  },
+  {
+    "id": "xss_v_016",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(username):\n    return render_template_string(f\"<h1>Welcome username!</h1>\")",
+    "notes": "Templated xss vulnerable sample #16"
+  },
+  {
+    "id": "xss_v_017",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(msg):\n    return render_template_string(f\"<h1>Welcome msg!</h1>\")",
+    "notes": "Templated xss vulnerable sample #17"
+  },
+  {
+    "id": "xss_v_018",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(query):\n    return render_template_string(f\"<h1>Welcome query!</h1>\")",
+    "notes": "Templated xss vulnerable sample #18"
+  },
+  {
+    "id": "xss_v_019",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(user_input):\n    return render_template_string(f\"<h1>Welcome user_input!</h1>\")",
+    "notes": "Templated xss vulnerable sample #19"
+  },
+  {
+    "id": "xss_v_020",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(comment):\n    return render_template_string(f\"<h1>Welcome comment!</h1>\")",
+    "notes": "Templated xss vulnerable sample #20"
+  },
+  {
+    "id": "xss_v_021",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(username):\n    return render_template_string(f\"<h1>Welcome username!</h1>\")",
+    "notes": "Templated xss vulnerable sample #21"
+  },
+  {
+    "id": "xss_v_022",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(msg):\n    return render_template_string(f\"<h1>Welcome msg!</h1>\")",
+    "notes": "Templated xss vulnerable sample #22"
+  },
+  {
+    "id": "xss_v_023",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(query):\n    return render_template_string(f\"<h1>Welcome query!</h1>\")",
+    "notes": "Templated xss vulnerable sample #23"
+  },
+  {
+    "id": "xss_v_024",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(user_input):\n    return render_template_string(f\"<h1>Welcome user_input!</h1>\")",
+    "notes": "Templated xss vulnerable sample #24"
+  },
+  {
+    "id": "xss_v_025",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(comment):\n    return render_template_string(f\"<h1>Welcome comment!</h1>\")",
+    "notes": "Templated xss vulnerable sample #25"
+  },
+  {
+    "id": "xss_v_026",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(username):\n    return render_template_string(\"<p>\" + username + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #26"
+  },
+  {
+    "id": "xss_v_027",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(msg):\n    return render_template_string(\"<p>\" + msg + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #27"
+  },
+  {
+    "id": "xss_v_028",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(query):\n    return render_template_string(\"<p>\" + query + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #28"
+  },
+  {
+    "id": "xss_v_029",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(user_input):\n    return render_template_string(\"<p>\" + user_input + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #29"
+  },
+  {
+    "id": "xss_v_030",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_profile(comment):\n    return render_template_string(\"<p>\" + comment + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #30"
+  },
+  {
+    "id": "xss_v_031",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(username):\n    return render_template_string(\"<p>\" + username + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #31"
+  },
+  {
+    "id": "xss_v_032",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(msg):\n    return render_template_string(\"<p>\" + msg + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #32"
+  },
+  {
+    "id": "xss_v_033",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(query):\n    return render_template_string(\"<p>\" + query + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #33"
+  },
+  {
+    "id": "xss_v_034",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(user_input):\n    return render_template_string(\"<p>\" + user_input + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #34"
+  },
+  {
+    "id": "xss_v_035",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef display_message(comment):\n    return render_template_string(\"<p>\" + comment + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #35"
+  },
+  {
+    "id": "xss_v_036",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(username):\n    return render_template_string(\"<p>\" + username + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #36"
+  },
+  {
+    "id": "xss_v_037",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(msg):\n    return render_template_string(\"<p>\" + msg + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #37"
+  },
+  {
+    "id": "xss_v_038",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(query):\n    return render_template_string(\"<p>\" + query + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #38"
+  },
+  {
+    "id": "xss_v_039",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(user_input):\n    return render_template_string(\"<p>\" + user_input + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #39"
+  },
+  {
+    "id": "xss_v_040",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef show_search(comment):\n    return render_template_string(\"<p>\" + comment + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #40"
+  },
+  {
+    "id": "xss_v_041",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(username):\n    return render_template_string(\"<p>\" + username + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #41"
+  },
+  {
+    "id": "xss_v_042",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(msg):\n    return render_template_string(\"<p>\" + msg + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #42"
+  },
+  {
+    "id": "xss_v_043",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(query):\n    return render_template_string(\"<p>\" + query + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #43"
+  },
+  {
+    "id": "xss_v_044",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(user_input):\n    return render_template_string(\"<p>\" + user_input + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #44"
+  },
+  {
+    "id": "xss_v_045",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef greet(comment):\n    return render_template_string(\"<p>\" + comment + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #45"
+  },
+  {
+    "id": "xss_v_046",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(username):\n    return render_template_string(\"<p>\" + username + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #46"
+  },
+  {
+    "id": "xss_v_047",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(msg):\n    return render_template_string(\"<p>\" + msg + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #47"
+  },
+  {
+    "id": "xss_v_048",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(query):\n    return render_template_string(\"<p>\" + query + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #48"
+  },
+  {
+    "id": "xss_v_049",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(user_input):\n    return render_template_string(\"<p>\" + user_input + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #49"
+  },
+  {
+    "id": "xss_v_050",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\ndef render_comment(comment):\n    return render_template_string(\"<p>\" + comment + \"</p>\")",
+    "notes": "Templated xss vulnerable sample #50"
+  },
+  {
+    "id": "xss_v_051",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_profile(username):\n    return Markup(f\"<div class='alert'>username</div>\")",
+    "notes": "Templated xss vulnerable sample #51"
+  },
+  {
+    "id": "xss_v_052",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_profile(msg):\n    return Markup(f\"<div class='alert'>msg</div>\")",
+    "notes": "Templated xss vulnerable sample #52"
+  },
+  {
+    "id": "xss_v_053",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_profile(query):\n    return Markup(f\"<div class='alert'>query</div>\")",
+    "notes": "Templated xss vulnerable sample #53"
+  },
+  {
+    "id": "xss_v_054",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_profile(user_input):\n    return Markup(f\"<div class='alert'>user_input</div>\")",
+    "notes": "Templated xss vulnerable sample #54"
+  },
+  {
+    "id": "xss_v_055",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_profile(comment):\n    return Markup(f\"<div class='alert'>comment</div>\")",
+    "notes": "Templated xss vulnerable sample #55"
+  },
+  {
+    "id": "xss_v_056",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef display_message(username):\n    return Markup(f\"<div class='alert'>username</div>\")",
+    "notes": "Templated xss vulnerable sample #56"
+  },
+  {
+    "id": "xss_v_057",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef display_message(msg):\n    return Markup(f\"<div class='alert'>msg</div>\")",
+    "notes": "Templated xss vulnerable sample #57"
+  },
+  {
+    "id": "xss_v_058",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef display_message(query):\n    return Markup(f\"<div class='alert'>query</div>\")",
+    "notes": "Templated xss vulnerable sample #58"
+  },
+  {
+    "id": "xss_v_059",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef display_message(user_input):\n    return Markup(f\"<div class='alert'>user_input</div>\")",
+    "notes": "Templated xss vulnerable sample #59"
+  },
+  {
+    "id": "xss_v_060",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef display_message(comment):\n    return Markup(f\"<div class='alert'>comment</div>\")",
+    "notes": "Templated xss vulnerable sample #60"
+  },
+  {
+    "id": "xss_v_061",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef show_search(username):\n    return Markup(f\"<div class='alert'>username</div>\")",
+    "notes": "Templated xss vulnerable sample #61"
+  },
+  {
+    "id": "xss_v_062",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef show_search(msg):\n    return Markup(f\"<div class='alert'>msg</div>\")",
+    "notes": "Templated xss vulnerable sample #62"
+  },
+  {
+    "id": "xss_v_063",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef show_search(query):\n    return Markup(f\"<div class='alert'>query</div>\")",
+    "notes": "Templated xss vulnerable sample #63"
+  },
+  {
+    "id": "xss_v_064",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef show_search(user_input):\n    return Markup(f\"<div class='alert'>user_input</div>\")",
+    "notes": "Templated xss vulnerable sample #64"
+  },
+  {
+    "id": "xss_v_065",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef show_search(comment):\n    return Markup(f\"<div class='alert'>comment</div>\")",
+    "notes": "Templated xss vulnerable sample #65"
+  },
+  {
+    "id": "xss_v_066",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef greet(username):\n    return Markup(f\"<div class='alert'>username</div>\")",
+    "notes": "Templated xss vulnerable sample #66"
+  },
+  {
+    "id": "xss_v_067",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef greet(msg):\n    return Markup(f\"<div class='alert'>msg</div>\")",
+    "notes": "Templated xss vulnerable sample #67"
+  },
+  {
+    "id": "xss_v_068",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef greet(query):\n    return Markup(f\"<div class='alert'>query</div>\")",
+    "notes": "Templated xss vulnerable sample #68"
+  },
+  {
+    "id": "xss_v_069",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef greet(user_input):\n    return Markup(f\"<div class='alert'>user_input</div>\")",
+    "notes": "Templated xss vulnerable sample #69"
+  },
+  {
+    "id": "xss_v_070",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef greet(comment):\n    return Markup(f\"<div class='alert'>comment</div>\")",
+    "notes": "Templated xss vulnerable sample #70"
+  },
+  {
+    "id": "xss_v_071",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_comment(username):\n    return Markup(f\"<div class='alert'>username</div>\")",
+    "notes": "Templated xss vulnerable sample #71"
+  },
+  {
+    "id": "xss_v_072",
+    "vuln_type": "xss",
+    "label": "vulnerable",
+    "expected_vuln_type": "xss",
+    "code": "from flask import render_template_string\nfrom markupsafe import Markup\ndef render_comment(msg):\n    return Markup(f\"<div class='alert'>msg</div>\")",
+    "notes": "Templated xss vulnerable sample #72"
+  },
+  {
+    "id": "xss_s_001",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from flask import render_template_string\ndef render_profile(username):\n    return render_template_string('<h1>Welcome {{ username }}</h1>', username=username)",
+    "notes": "Templated xss secure/patched sample #1"
+  },
+  {
+    "id": "xss_s_002",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from flask import render_template\ndef display_message(msg):\n    return render_template('message.html', msg=msg)",
+    "notes": "Templated xss secure/patched sample #2"
+  },
+  {
+    "id": "xss_s_003",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from markupsafe import escape\ndef greet(user_input):\n    return '<div>' + escape(user_input) + '</div>'",
+    "notes": "Templated xss secure/patched sample #3"
+  },
+  {
+    "id": "xss_s_004",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from flask import render_template_string\ndef show_search(query):\n    return render_template_string('<p>You searched for: {{ query }}</p>', query=query)",
+    "notes": "Templated xss secure/patched sample #4"
+  },
+  {
+    "id": "xss_s_005",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from markupsafe import escape\nfrom markupsafe import Markup\ndef render_comment(comment):\n    return Markup('<div>' + escape(comment) + '</div>')",
+    "notes": "Templated xss secure/patched sample #5"
+  },
+  {
+    "id": "xss_s_006",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "def greet2(name):\n    return f'<b>' + name + '</b>'",
+    "notes": "Templated xss secure/patched sample #6"
+  },
+  {
+    "id": "xss_s_007",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from flask import render_template\ndef render_user(username):\n    return render_template('user.html', username=username)",
+    "notes": "Templated xss secure/patched sample #7"
+  },
+  {
+    "id": "xss_s_008",
+    "vuln_type": "xss",
+    "label": "secure",
+    "expected_vuln_type": null,
+    "code": "from markupsafe import escape\ndef show(user_input):\n    return escape(user_input)",
+    "notes": "Templated xss secure/patched sample #8"
+  }
+]

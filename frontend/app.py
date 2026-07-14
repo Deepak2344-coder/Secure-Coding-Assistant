@@ -486,15 +486,27 @@ with st.sidebar:
     st.divider()
     st.markdown("### 📥 Export Report")
     if "scan_result" in st.session_state and "scan_code" in st.session_state:
+        is_multi = st.session_state.scan_code == "__multi__"
         scan_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        md_report = generate_markdown_report(
-            st.session_state.scan_code,
-            st.session_state.scan_result.get("issues", []),
-            scan_time
-        )
-        download_button(md_report, f"scan_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md", "📄 Download Markdown", "text/markdown")
-        
-        if FPDF_AVAILABLE:
+
+        # Build display code for report
+        if is_multi and st.session_state.uploaded_files:
+            combined = "\n\n".join(
+                f"# --- {path} ---\n{code}"
+                for path, code in st.session_state.uploaded_files.items()
+            )
+        else:
+            combined = st.session_state.scan_code if not is_multi else ""
+
+        if combined:
+            md_report = generate_markdown_report(
+                combined,
+                st.session_state.scan_result.get("issues", []),
+                scan_time
+            )
+            download_button(md_report, f"scan_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md", "📄 Download Markdown", "text/markdown")
+
+        if FPDF_AVAILABLE and not is_multi:
             pdf_bytes = generate_pdf_report(
                 st.session_state.scan_code,
                 st.session_state.scan_result.get("issues", []),
@@ -502,12 +514,14 @@ with st.sidebar:
             )
             if pdf_bytes:
                 pdf_download_button(pdf_bytes, f"scan_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf", "📑 Download PDF")
-        else:
+        elif not FPDF_AVAILABLE:
             st.caption("💡 Install `fpdf2` for PDF export: `pip install fpdf2`")
 
-# --- Callback-based file upload (no st.rerun, no truthy-file loop) ---
+# --- Callback-based file upload (single .py + multi-file .zip) ---
 if "code_text" not in st.session_state:
     st.session_state.code_text = ""
+if "uploaded_files" not in st.session_state:
+    st.session_state.uploaded_files = {}
 
 
 def _on_upload():
@@ -515,21 +529,60 @@ def _on_upload():
     if f is not None:
         try:
             st.session_state.code_text = f.read().decode("utf-8")
+            st.session_state.uploaded_files = {}
         except Exception:
             st.session_state.code_text = ""
-    # If f is None (user clicked X), keep code_text as-is
+
+
+def _on_upload_zip():
+    zf = st.session_state.get("zip_uploader")
+    if zf is not None:
+        import zipfile
+        try:
+            files = {}
+            with zipfile.ZipFile(zf) as z:
+                for name in z.namelist():
+                    if name.endswith(".py"):
+                        files[name] = z.read(name).decode("utf-8")
+            if files:
+                st.session_state.uploaded_files = files
+                total = sum(len(c.splitlines()) for c in files.values())
+                names = "\n".join(f"  - {k} ({len(v.splitlines())} lines)" for k, v in files.items())
+                st.session_state._zip_msg = f"Loaded {len(files)} files ({total} lines):\n{names}"
+            else:
+                st.session_state._zip_msg = "No .py files found in the archive."
+        except Exception:
+            st.session_state._zip_msg = "Could not read zip file."
 
 
 def _clear():
     st.session_state.code_text = ""
+    st.session_state.uploaded_files = {}
+    st.session_state._zip_msg = ""
+    if "scan_result" in st.session_state:
+        del st.session_state.scan_result
+    if "scan_code" in st.session_state:
+        del st.session_state.scan_code
 
 
-st.file_uploader(
-    "Or upload a .py file",
-    type=["py"],
-    key="file_uploader",
-    on_change=_on_upload,
-)
+col_left, col_right = st.columns(2)
+with col_left:
+    st.file_uploader(
+        "Upload a .py file",
+        type=["py"],
+        key="file_uploader",
+        on_change=_on_upload,
+    )
+with col_right:
+    st.file_uploader(
+        "Or upload a .zip project",
+        type=["zip"],
+        key="zip_uploader",
+        on_change=_on_upload_zip,
+    )
+
+if st.session_state.uploaded_files:
+    st.info(st.session_state.get("_zip_msg", ""), icon="📦")
 
 code_text = st.text_area(
     "Code Input",
@@ -539,8 +592,10 @@ code_text = st.text_area(
 )
 
 col1, col2, col3 = st.columns([1, 1, 1])
+files_mode = bool(st.session_state.uploaded_files)
 with col1:
-    scan_clicked = st.button("🔍 Scan Code", type="primary", use_container_width=True)
+    scan_label = "🔍 Scan All Files" if files_mode else "🔍 Scan Code"
+    scan_clicked = st.button(scan_label, type="primary", use_container_width=True)
 with col2:
     st.button("🗑️ Clear", use_container_width=True, on_click=_clear)
 with col3:
@@ -548,29 +603,48 @@ with col3:
         scan_clicked = True
 
 if scan_clicked:
-    if not st.session_state.code_text.strip():
-        st.warning("Please enter or upload some code to scan.")
+    if files_mode:
+        files_dict = st.session_state.uploaded_files
+        payload = {"files": files_dict}
+        endpoint = f"{API_URL}/scan-files"
+        timeout = 60 + 15 * len(files_dict)
+        scan_code_key = "__multi__"
     else:
-        with st.spinner("Scanning code for vulnerabilities..."):
+        if not st.session_state.code_text.strip():
+            st.warning("Please enter or upload some code to scan.")
+            scan_clicked = False
+        else:
+            payload = {"code": st.session_state.code_text}
+            endpoint = f"{API_URL}/scan"
+            timeout = 60
+            scan_code_key = st.session_state.code_text
+
+    if scan_clicked:
+        with st.spinner(f"Scanning{' ' + str(len(files_dict)) + ' files' if files_mode else ' code'} for vulnerabilities..."):
             try:
                 response = requests.post(
-                    f"{API_URL}/scan",
-                    json={"code": st.session_state.code_text},
-                    timeout=60,
+                    endpoint,
+                    json=payload,
+                    timeout=timeout,
                 )
                 response.raise_for_status()
                 result = response.json()
-                
+
                 st.session_state.scan_result = result
-                st.session_state.scan_code = st.session_state.code_text
-                
+                st.session_state.scan_code = scan_code_key
+
                 if not result["issues"]:
                     st.success("✅ No issues detected! Your code looks secure.")
                 else:
                     st.warning(f"⚠️ Found {len(result['issues'])} issue(s)")
-                
+                    if files_mode:
+                        from collections import Counter
+                        per_file = Counter(i.get("file_path", "?") for i in result["issues"])
+                        details = ", ".join(f"{p}: {n}" for p, n in per_file.most_common())
+                        st.caption(f"Per file — {details}")
+
                 st.rerun()
-                
+
             except requests.exceptions.ConnectionError:
                 st.error(
                     "Cannot connect to the backend. Make sure the FastAPI server is running on port 8000."
@@ -585,79 +659,97 @@ if "scan_result" in st.session_state:
     
     if issues:
         st.markdown("---")
-        
-        for idx, issue in enumerate(issues):
-            severity = issue.get("severity", "Low")
-            category = issue.get("category", "security")
-            severity_config = SEVERITY_CONFIG.get(severity, SEVERITY_CONFIG["Low"])
-            category_config = CATEGORY_CONFIG.get(category, CATEGORY_CONFIG["security"])
-            
-            heading = (
-                f"Line {issue.get('line', '?')} — "
-                f"{issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}"
-            )
-            
-            with st.expander(heading, expanded=(idx == 0)):
-                # Header with badges
-                st.markdown(
-                    f"""
-                    <div class="issue-header">
-                        <span class="line-badge">Line {issue.get('line', '?')}</span>
-                        <span class="vuln-type">{issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}</span>
-                        {render_category_badge(category)}
-                        {render_severity_badge(severity)}
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
+
+        # Group issues by file_path for multi-file scans
+        has_file_paths = any(i.get("file_path") for i in issues)
+        if has_file_paths:
+            from collections import defaultdict
+            by_file = defaultdict(list)
+            for i in issues:
+                by_file[i.get("file_path", "")].append(i)
+            file_groups = list(by_file.items())
+        else:
+            file_groups = [("", issues)]
+
+        global_idx = 0
+        for file_path, file_issues in file_groups:
+            if file_path:
+                st.markdown(f"### 📁 `{file_path}`")
+                st.caption(f"{len(file_issues)} issue(s) in this file")
+
+            for idx, issue in enumerate(file_issues):
+                severity = issue.get("severity", "Low")
+                category = issue.get("category", "security")
+                severity_config = SEVERITY_CONFIG.get(severity, SEVERITY_CONFIG["Low"])
+                category_config = CATEGORY_CONFIG.get(category, CATEGORY_CONFIG["security"])
+
+                heading = (
+                    f"Line {issue.get('line', '?')} — "
+                    f"{issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}"
                 )
-                
-                # Details row
-                col1, col2, col3, col4 = st.columns(4)
-                col1.metric("Confidence", issue.get("confidence", "N/A"))
-                col2.metric("Severity", severity)
-                col3.metric("Category", category_config["label"])
-                col4.metric("CWE", issue.get("cwe_reference", "N/A"))
-                
-                st.divider()
-                
-                # Vulnerable snippet
-                st.markdown("#### 🔴 Vulnerable Code")
-                snippet = issue.get("snippet", "")
-                st.code(snippet, language="python")
-                
-                copy_col1, copy_col2 = st.columns([1, 5])
-                with copy_col1:
-                    if st.button("📋 Copy", key=f"copy_snippet_{idx}", help="Copy vulnerable snippet"):
-                        st.code(snippet, language="python")
-                        st.toast("Copied vulnerable snippet!", icon="✅")
-                
-                if issue.get("message"):
-                    st.info(f"**Detail:** {issue['message']}")
-                
-                if issue.get("explanation"):
-                    st.markdown("#### 💡 Explanation")
-                    st.info(issue["explanation"])
-                
-                if issue.get("secure_rewrite"):
-                    st.markdown("#### 🟢 Secure Rewrite")
-                    rewrite = issue["secure_rewrite"]
-                    st.code(rewrite, language="python")
-                    
+
+                with st.expander(heading, expanded=(global_idx == 0)):
+                    fp_badge = f'<span class="line-badge">{file_path}</span> ' if file_path else ""
+                    st.markdown(
+                        f"""
+                        <div class="issue-header">
+                            {fp_badge}
+                            <span class="line-badge">Line {issue.get('line', '?')}</span>
+                            <span class="vuln-type">{issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}</span>
+                            {render_category_badge(category)}
+                            {render_severity_badge(severity)}
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+
+                    col1, col2, col3, col4 = st.columns(4)
+                    col1.metric("Confidence", issue.get("confidence", "N/A"))
+                    col2.metric("Severity", severity)
+                    col3.metric("Category", category_config["label"])
+                    col4.metric("CWE", issue.get("cwe_reference", "N/A"))
+
+                    st.divider()
+
+                    st.markdown("#### 🔴 Vulnerable Code")
+                    snippet = issue.get("snippet", "")
+                    st.code(snippet, language="python")
+
                     copy_col1, copy_col2 = st.columns([1, 5])
                     with copy_col1:
-                        if st.button("📋 Copy", key=f"copy_rewrite_{idx}", help="Copy secure rewrite"):
-                            st.code(rewrite, language="python")
-                            st.toast("Copied secure rewrite!", icon="✅")
-                    
-                    if show_diff and snippet and rewrite:
-                        st.markdown("#### 🔄 Diff View")
-                        diff_html = generate_diff(snippet, rewrite)
-                        st.markdown(diff_html, unsafe_allow_html=True)
-                
-                if issue.get("cwe_reference"):
-                    cwe = issue["cwe_reference"]
-                    url = issue.get("source_url") or f"https://cwe.mitre.org/data/definitions/{cwe.split('-')[1]}.html"
-                    st.markdown(f"**Reference:** [{cwe}]({url})")
+                        if st.button("📋 Copy", key=f"copy_snippet_{global_idx}", help="Copy vulnerable snippet"):
+                            st.code(snippet, language="python")
+                            st.toast("Copied vulnerable snippet!", icon="✅")
+
+                    if issue.get("message"):
+                        st.info(f"**Detail:** {issue['message']}")
+
+                    if issue.get("explanation"):
+                        st.markdown("#### 💡 Explanation")
+                        st.info(issue["explanation"])
+
+                    if issue.get("secure_rewrite"):
+                        st.markdown("#### 🟢 Secure Rewrite")
+                        rewrite = issue["secure_rewrite"]
+                        st.code(rewrite, language="python")
+
+                        copy_col1, copy_col2 = st.columns([1, 5])
+                        with copy_col1:
+                            if st.button("📋 Copy", key=f"copy_rewrite_{global_idx}", help="Copy secure rewrite"):
+                                st.code(rewrite, language="python")
+                                st.toast("Copied secure rewrite!", icon="✅")
+
+                        if show_diff and snippet and rewrite:
+                            st.markdown("#### 🔄 Diff View")
+                            diff_html = generate_diff(snippet, rewrite)
+                            st.markdown(diff_html, unsafe_allow_html=True)
+
+                    if issue.get("cwe_reference"):
+                        cwe = issue["cwe_reference"]
+                        url = issue.get("source_url") or f"https://cwe.mitre.org/data/definitions/{cwe.split('-')[1]}.html"
+                        st.markdown(f"**Reference:** [{cwe}]({url})")
+
+                global_idx += 1
     
     if show_raw:
         st.markdown("---")

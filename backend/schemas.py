@@ -41,10 +41,12 @@ class Issue(BaseModel):
     secure_rewrite: str = ""
     cwe_reference: str = ""
     source_url: str = ""
+    file_path: str = ""
 
 
 class ScanRequest(BaseModel):
-    code: str
+    code: str = ""
+    files: dict[str, str] = {}
 
 
 class ScanResponse(BaseModel):

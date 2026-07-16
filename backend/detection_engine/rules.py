@@ -70,7 +70,7 @@ def _check_sql_injection(code: str) -> list[Issue]:
     for i, line in enumerate(lines):
         line_lower = line.lower()
         has_sql_keyword = any(
-            kw in line_lower for kw in SQL_KEYWORDS
+            re.search(r'\b' + kw + r'\b', line_lower) for kw in SQL_KEYWORDS
         )
         if not has_sql_keyword:
             continue
@@ -78,7 +78,7 @@ def _check_sql_injection(code: str) -> list[Issue]:
         has_concat = "+" in line and ('"' in line or "'" in line)
         has_fstring = 'f"' in line_lower or "f'" in line_lower
         has_format = ".format(" in line
-        has_percent = re.search(r'%[sdx]["\']\s*%', line)
+        has_percent = re.search(r'%\s*\(', line) or re.search(r'%[sdxr]\s*%', line)
 
         if has_concat or has_fstring or has_format or has_percent:
             issues.append(

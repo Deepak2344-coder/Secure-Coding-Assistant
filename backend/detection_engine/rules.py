@@ -23,7 +23,7 @@ COMMAND_INJECTION_PATTERNS = [
 
 XSS_PATTERNS = [
     re.compile(r'render_template_string\s*\((?:\s*f["\']|[^)]*\+)'),
-    re.compile(r'{{.*\|safe}}'),
+    re.compile(r'{{.*[|]safe\s*}}'),
     re.compile(r'{%\s*autoescape\s+false\s*%}'),
     re.compile(r'Markup\s*\((?!.*escape\s*\()'),
 ]
@@ -78,7 +78,7 @@ def _check_sql_injection(code: str) -> list[Issue]:
         has_concat = "+" in line and ('"' in line or "'" in line)
         has_fstring = 'f"' in line_lower or "f'" in line_lower
         has_format = ".format(" in line
-        has_percent = re.search(r'%\s*\(', line) or re.search(r'%[sdxr]\s*%', line)
+        has_percent = re.search(r'%\s*\(', line) or re.search(r'%[sdxr]["\']?\s*%', line)
 
         if has_concat or has_fstring or has_format or has_percent:
             issues.append(

@@ -1,10 +1,24 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.schemas import ScanRequest, ScanResponse, Issue, IssueCategory
 from backend.detection_engine.scanner import run_scan
 
-app = FastAPI(title="Secure Coding Assistant API", version="0.3.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        from retrieval_layer.embedder import _get_model, _get_collection
+        _get_model()
+        _get_collection()
+    except Exception:
+        pass
+    yield
+
+
+app = FastAPI(title="Secure Coding Assistant API", version="0.3.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

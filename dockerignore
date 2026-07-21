@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.git/
+.env
+chroma_data/
+dataset/benchmark_results.json
+dataset/benchmark_results.md
+.pytest_cache/
+*.egg-info/
+README.md
+CONTRIBUTING.md

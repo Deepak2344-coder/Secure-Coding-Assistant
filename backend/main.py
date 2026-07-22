@@ -9,10 +9,6 @@ from backend.detection_engine.scanner import run_scan
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    try:
-        from retrieval_layer.embedder import _get_model, _get_collection
-    except Exception:
-        pass
     yield
 
 

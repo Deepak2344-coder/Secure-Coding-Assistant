@@ -31,6 +31,9 @@ chroma_data/
 *.csv
 *.html
 
+# pytest
+.pytest_cache/
+
 # Server / app logs
 *.log
 server_*.log

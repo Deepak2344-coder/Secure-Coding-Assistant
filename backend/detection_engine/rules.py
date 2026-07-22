@@ -25,7 +25,7 @@ XSS_PATTERNS = [
     re.compile(r'render_template_string\s*\((?:\s*f["\']|[^)]*\+)'),
     re.compile(r'{{.*[|]safe\s*}}'),
     re.compile(r'{%\s*autoescape\s+false\s*%}'),
-    re.compile(r'Markup\s*\((?!.*escape\s*\()'),
+    re.compile(r'(?<!\.)Markup\s*\((?!.*escape\s*\()'),
 ]
 
 PYTHON_BUILTINS = {

@@ -110,11 +110,11 @@ def _sqli_secure():
 def _cmd_vulnerable():
     styles = {
         "os_system_concat": lambda v: f"\"ping -c 1 \" + {v}",
-        "os_system_fstring": lambda v: f"f\"ping -c 1 {v}\"",
+        "os_system_fstring": lambda v: f"f\"ping -c 1 {{{v}}}\"",
         "os_popen_concat": lambda v: f"\"echo \" + {v}",
         "subprocess_call": "subprocess.call(cmd, shell=True)",
         "subprocess_run": "subprocess.run(cmd, shell=True)",
-        "subprocess_popen_fstring": lambda v: f"f\"ls -la {v}\"",
+        "subprocess_popen_fstring": lambda v: f"f\"ls -la {{{v}}}\"",
     }
     funcs = ["ping", "run_cmd", "execute", "list_dir", "do_backup"]
     vars_ = ["host", "user_input", "path", "filename", "arg"]

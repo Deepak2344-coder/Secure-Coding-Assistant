@@ -161,18 +161,6 @@ st.markdown(
     "syntax errors, and common logical mistakes."
 )
 
-CATEGORY_ICON = {
-    "security": "🔴",
-    "syntax": "🟣",
-    "logic": "🟠",
-}
-
-CATEGORY_LABEL = {
-    "security": "Security",
-    "syntax": "Syntax",
-    "logic": "Logic",
-}
-
 SEVERITY_CONFIG = {
     "High": {
         "icon": "🔴",

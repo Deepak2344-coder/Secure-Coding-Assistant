@@ -1,5 +1,6 @@
+from collections.abc import Sequence
+
 from pydantic import BaseModel
-from typing import List
 from enum import Enum
 
 
@@ -50,4 +51,4 @@ class ScanRequest(BaseModel):
 
 
 class ScanResponse(BaseModel):
-    issues: List[Issue]
+    issues: Sequence[Issue]

@@ -1,11 +1,9 @@
 import streamlit as st
 import requests
-import json
 import difflib
 import base64
 import html
 from datetime import datetime
-from io import BytesIO
 import os
 
 try:
@@ -187,12 +185,6 @@ CATEGORY_CONFIG = {
     "syntax": {"icon": "🟣", "label": "Syntax", "tooltip": "Syntax error - code will not run"},
     "logic": {"icon": "🟠", "label": "Logic", "tooltip": "Logic error - code runs but behaves incorrectly"},
 }
-
-def copy_button(text: str, key: str, label: str = "📋 Copy") -> None:
-    """Render a copy-to-clipboard button using Streamlit's built-in clipboard."""
-    if st.button(label, key=key, help="Copy to clipboard"):
-        st.code(text, language="python")
-        st.toast(f"Copied {label.lower()}!", icon="✅")
 
 def render_severity_badge(severity: str) -> str:
     """Render a styled severity badge with icon and tooltip."""

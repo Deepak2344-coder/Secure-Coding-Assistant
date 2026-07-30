@@ -284,7 +284,7 @@ def check_logical_errors(code: str) -> list[Issue]:
                         )
                     )
 
-        # 6. Undefined variable references
+    # 6. Undefined variable references
     defined_names = set()
     for n in ast.walk(tree):
         if isinstance(n, ast.Name):

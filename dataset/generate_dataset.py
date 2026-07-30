@@ -8,6 +8,7 @@ Output: dataset/samples.json
 """
 import json
 import os
+from collections import Counter
 from itertools import product
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -308,7 +309,6 @@ def main():
         json.dump(samples, f, indent=2, ensure_ascii=False)
 
     # Summary
-    from collections import Counter
     by_label = Counter(s["label"] for s in samples)
     by_type = Counter(s["vuln_type"] for s in samples)
     print(f"Wrote {len(samples)} samples to {out_path}")

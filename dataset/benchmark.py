@@ -88,7 +88,7 @@ def main():
         })
 
     # Metrics
-    def metrics(t, f):
+    def metrics(t):
         precision = tp[t] / (tp[t] + fp[t]) if (tp[t] + fp[t]) else 1.0
         recall = tp[t] / (tp[t] + fn[t]) if (tp[t] + fn[t]) else 1.0
         f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
@@ -97,7 +97,7 @@ def main():
     results = {"per_type": {}, "overall": {}, "errors": errors}
     all_tp = all_fn = all_fp = all_tn = 0
     for t in SECURITY_TYPES:
-        p, r, f1 = metrics(t, fp[t])
+        p, r, f1 = metrics(t)
         results["per_type"][t] = {
             "TP": tp[t], "FN": fn[t], "FP": fp[t], "TN": tn[t],
             "precision": round(p, 4), "recall": round(r, 4), "f1": round(f1, 4),

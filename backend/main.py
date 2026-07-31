@@ -1,5 +1,3 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,12 +5,7 @@ from backend.schemas import ScanRequest, ScanResponse, Issue, IssueCategory
 from backend.detection_engine.scanner import run_scan
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    yield
-
-
-app = FastAPI(title="Secure Coding Assistant API", version="0.3.0", lifespan=lifespan)
+app = FastAPI(title="Secure Coding Assistant API", version="0.3.0")
 
 app.add_middleware(
     CORSMiddleware,

@@ -13,6 +13,7 @@ except ImportError:
     FPDF_AVAILABLE = False
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
+MULTI_SCAN_KEY = "__multi__"
 
 st.set_page_config(
     page_title="Secure Coding Assistant",
@@ -466,7 +467,7 @@ with st.sidebar:
     st.divider()
     st.markdown("### 📥 Export Report")
     if "scan_result" in st.session_state and "scan_code" in st.session_state:
-        is_multi = st.session_state.scan_code == "__multi__"
+        is_multi = st.session_state.scan_code == MULTI_SCAN_KEY
         scan_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Build display code for report
@@ -588,7 +589,7 @@ if scan_clicked:
         payload = {"files": files_dict}
         endpoint = f"{API_URL}/scan-files"
         timeout = 60 + 15 * len(files_dict)
-        scan_code_key = "__multi__"
+        scan_code_key = MULTI_SCAN_KEY
     else:
         if not st.session_state.code_text.strip():
             st.warning("Please enter or upload some code to scan.")

@@ -72,5 +72,5 @@ def scan_files(request: ScanRequest):
 
 
 @app.get("/health")
-def health():
+def health() -> dict[str, str]:
     return {"status": "ok"}

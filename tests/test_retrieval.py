@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from backend.schemas import Issue, VulnType, Severity, IssueCategory
 

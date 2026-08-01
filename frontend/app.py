@@ -363,7 +363,7 @@ def _pdf_safe(text: str) -> str:
     return text.encode("latin-1", "replace").decode("latin-1")
 
 
-def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes:
+def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes | None:
     """Generate a PDF report using FPDF."""
     if not FPDF_AVAILABLE:
         return None

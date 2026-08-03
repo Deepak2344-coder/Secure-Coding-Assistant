@@ -3,7 +3,7 @@
 **Lane 3 — Explanation & Secure Rewrite Generation**
 
 ## Current Status
-🟡 Placeholder — implementation starts in Weeks 3–4.
+🟢 Implemented — Gemini primary, Groq failover, structured output parsing.
 
 ## What Goes Here
 - Prompt templates for each vulnerability type
@@ -27,7 +27,3 @@ Detection engine issue + retrieved OWASP/CWE text.
   "cwe_reference": "CWE-78"
 }
 ```
-
-## Dependencies (to add later)
-- `google-genai` (Gemini)
-- `groq` (Python SDK)

@@ -29,18 +29,14 @@ Code Input → Syntactic Scan (AST + regex) → Vector Retrieval (ChromaDB)
   → LLM Synthesis (Gemini / Groq) → Report Rendering (Streamlit)
 ```
 
-## v0 — Skeletal Model
+## Current Implementation
 
-Current implementation (Weeks 1–2):
-- **Detection Engine:** AST + regex rules for SQL injection, command injection, hardcoded secrets, and XSS
-- **Backend:** FastAPI with `/scan` and `/health` endpoints
-- **Frontend:** Streamlit UI with code input (paste or upload) and results display
-- **Dataset:** 20 labeled samples (5 per vulnerability type)
-
-Coming in Weeks 3–4:
-- Semantic retrieval over OWASP/CWE knowledge base (ChromaDB + sentence-transformers)
-- LLM-generated explanations and secure rewrites (Gemini → Groq failover)
-- Enhanced UI with diff view and severity badges
+- **Detection Engine:** AST + regex rules for SQL injection, command injection, hardcoded secrets, XSS, syntax errors, and common logic mistakes
+- **Backend:** FastAPI with `/scan`, `/scan-files`, and `/health` endpoints
+- **Frontend:** Streamlit UI with code input (paste or upload single file / zip project), diff view, severity badges, and Markdown/PDF report export
+- **Retrieval Layer:** Semantic retrieval over an OWASP/CWE knowledge base (ChromaDB + sentence-transformers)
+- **LLM Synthesis:** LLM-generated explanations and secure rewrites (Gemini → Groq failover)
+- **Dataset:** 300+ templated labeled samples with a benchmark harness (recall/precision per type)
 
 ## Project Structure
 
@@ -48,9 +44,9 @@ Coming in Weeks 3–4:
 backend/               — FastAPI API server
   detection_engine/    — AST + regex scanning rules
 frontend/              — Streamlit user interface
-dataset/               — Labeled vulnerability samples
-retrieval_layer/       — (WIP) Vector search over security docs
-llm_synthesis/         — (WIP) LLM explanation + patch generation
+dataset/               — Labeled vulnerability samples + benchmark harness
+retrieval_layer/       — Vector search over security docs (ChromaDB)
+llm_synthesis/         — LLM explanation + patch generation (Gemini / Groq)
 ```
 
 ## Team

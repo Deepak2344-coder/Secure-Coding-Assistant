@@ -3,10 +3,10 @@
 **Lane 2 — Semantic Search over Security Knowledge Base**
 
 ## Current Status
-🟡 Placeholder — implementation starts in Weeks 3–4.
+🟢 Implemented — OWASP/CWE corpus indexed in ChromaDB with `sentence-transformers`.
 
 ## What Goes Here
-- OWASP / CWE source document curation
+- OWASP / CWE source document curation (`corpus.py`)
 - Chunking strategy for reference texts
 - Embedding pipeline using `sentence-transformers` (`all-MiniLM-L6-v2`)
 - ChromaDB setup and indexing
@@ -26,7 +26,3 @@ The detection engine output (`Issue` objects with line, vuln_type, snippet).
   "source_url": "https://cwe.mitre.org/data/definitions/78.html"
 }
 ```
-
-## Dependencies (to add later)
-- `sentence-transformers`
-- `chromadb`

@@ -3,7 +3,8 @@ import re
 
 from backend.schemas import Issue, VulnType, Severity, IssueCategory
 
-SQL_KEYWORDS = ["select", "insert", "update", "delete", "drop", "union", "create", "alter"]
+SQL_KEYWORDS = ("select", "insert", "update", "delete", "drop", "union", "create", "alter")
+SQL_KEYWORD_PATTERNS = [re.compile(r"\b" + kw + r"\b", re.IGNORECASE) for kw in SQL_KEYWORDS]
 
 SUSPICIOUS_VAR_PATTERNS = [
     re.compile(r"(api[_-]?key|apikey)", re.IGNORECASE),
@@ -46,7 +47,6 @@ PYTHON_BUILTINS = {
     "globals", "locals", "slice", "pow", "round", "__import__",
     "AssertionError", "NotImplementedError", "PendingDeprecationWarning",
     "bytes", "bytearray", "memoryview", "frozenset",
-    "hasattr", "issubclass", "isinstance",
 }
 
 SHADOWED_BUILTINS = {
@@ -68,14 +68,12 @@ def _check_sql_injection(code: str) -> list[Issue]:
     lines = code.split("\n")
 
     for i, line in enumerate(lines):
-        line_lower = line.lower()
-        has_sql_keyword = any(
-            re.search(r'\b' + kw + r'\b', line_lower) for kw in SQL_KEYWORDS
-        )
+        has_sql_keyword = any(p.search(line) for p in SQL_KEYWORD_PATTERNS)
         if not has_sql_keyword:
             continue
 
         has_concat = "+" in line and ('"' in line or "'" in line)
+        line_lower = line.lower()
         has_fstring = 'f"' in line_lower or "f'" in line_lower
         has_format = ".format(" in line
         has_percent = re.search(r'%\s*\(', line) or re.search(r'%[sdxr]["\']?\s*%', line)

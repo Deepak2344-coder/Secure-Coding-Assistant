@@ -29,7 +29,7 @@ SECURITY_TYPES = {
 }
 
 
-def detect(code: str):
+def detect(code: str) -> set[str] | dict[str, str]:
     """Return the set of detected security vuln_types for a code snippet."""
     try:
         result = run_scan(ScanRequest(code=code))

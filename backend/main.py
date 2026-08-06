@@ -44,7 +44,7 @@ def _enrich_with_llm(issue: Issue) -> None:
 
 
 @app.post("/scan", response_model=ScanResponse)
-def scan_code(request: ScanRequest):
+def scan_code(request: ScanRequest) -> ScanResponse:
     result = run_scan(request)
 
     for issue in result.issues:
@@ -54,7 +54,7 @@ def scan_code(request: ScanRequest):
 
 
 @app.post("/scan-files", response_model=ScanResponse)
-def scan_files(request: ScanRequest):
+def scan_files(request: ScanRequest) -> ScanResponse:
     if not request.files:
         return ScanResponse(issues=[])
 

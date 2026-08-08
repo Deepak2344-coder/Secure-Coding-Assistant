@@ -53,7 +53,6 @@ def main():
     tn = defaultdict(int)
 
     errors = []
-    per_sample = []
 
     for s in samples:
         vtype = s["vuln_type"]
@@ -68,24 +67,14 @@ def main():
         if label == "vulnerable":
             if expected in detected:
                 tp[vtype] += 1
-                outcome = "TP"
             else:
                 fn[vtype] += 1
-                outcome = "FN"
         else:  # secure -> expected is None
             # A false positive is any detected SECURITY issue.
-            sec_detected = detected & SECURITY_TYPES
-            if sec_detected:
+            if detected & SECURITY_TYPES:
                 fp[vtype] += 1
-                outcome = "FP"
             else:
                 tn[vtype] += 1
-                outcome = "TN"
-
-        per_sample.append({
-            "id": s["id"], "vuln_type": vtype, "label": label,
-            "detected": sorted(detected), "outcome": outcome,
-        })
 
     # Metrics
     def metrics(t):

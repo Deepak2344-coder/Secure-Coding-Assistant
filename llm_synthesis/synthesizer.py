@@ -5,9 +5,9 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
+from backend.schemas import Issue
 from llm_synthesis.prompts import build_prompt, SYSTEM_PROMPT
 from retrieval_layer.retriever import RetrievalResult
-from backend.schemas import Issue
 
 load_dotenv()
 

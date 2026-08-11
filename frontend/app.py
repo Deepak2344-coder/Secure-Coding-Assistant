@@ -206,9 +206,9 @@ def generate_diff(original: str, modified: str) -> str:
     """
     original_lines = original.splitlines(keepends=True)
     modified_lines = modified.splitlines(keepends=True)
-    
+
     diff = difflib.SequenceMatcher(None, original_lines, modified_lines)
-    
+
     html_parts = ['<div class="diff-container">']
     html_parts.append(
         '<div class="diff-legend">'
@@ -226,10 +226,10 @@ def generate_diff(original: str, modified: str) -> str:
         '</tr></thead>'
     )
     html_parts.append('<tbody>')
-    
+
     cell_style = 'padding: 2px 10px; border-right: 1px solid #e2e8f0;'
     blank_style = 'padding: 2px 10px; background-color: #ffffff;'
-    
+
     for tag, i1, i2, j1, j2 in diff.get_opcodes():
         if tag == 'equal':
             for i in range(i1, i2):
@@ -267,7 +267,7 @@ def generate_diff(original: str, modified: str) -> str:
                     f'<tr><td class="diff-line {orig_class}" style="{orig_style}">{orig_line}</td>'
                     f'<td class="diff-line {mod_class}" style="{mod_style}">{mod_line}</td></tr>'
                 )
-    
+
     html_parts.append('</tbody></table></div>')
     return ''.join(html_parts)
 
@@ -291,7 +291,7 @@ def generate_markdown_report(code: str, issues: list, scan_time: str) -> str:
         "## Issues Detected",
         "",
     ]
-    
+
     if not issues:
         lines.append("No issues detected! 🎉")
     else:
@@ -300,7 +300,7 @@ def generate_markdown_report(code: str, issues: list, scan_time: str) -> str:
             category = issue.get("category", "security")
             severity_config = SEVERITY_CONFIG.get(severity, SEVERITY_CONFIG["Low"])
             category_config = CATEGORY_CONFIG.get(category, CATEGORY_CONFIG["security"])
-            
+
             lines.extend([
                 f"### Issue #{i}: {issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}",
                 f"**Line:** {issue.get('line', 'N/A')}  ",
@@ -315,13 +315,13 @@ def generate_markdown_report(code: str, issues: list, scan_time: str) -> str:
                 "```",
                 "",
             ])
-            
+
             if issue.get("message"):
                 lines.extend(["#### Detail", issue["message"], ""])
-            
+
             if issue.get("explanation"):
                 lines.extend(["#### Explanation", issue["explanation"], ""])
-            
+
             if issue.get("secure_rewrite"):
                 lines.extend([
                     "#### Secure Rewrite",
@@ -330,13 +330,13 @@ def generate_markdown_report(code: str, issues: list, scan_time: str) -> str:
                     "```",
                     "",
                 ])
-            
+
             if issue.get("source_url"):
                 lines.extend([f"**Reference:** [{issue['cwe_reference']}]({issue['source_url']})", ""])
-            
+
             lines.append("---")
             lines.append("")
-    
+
     return "\n".join(lines)
 
 def _pdf_safe(text: str) -> str:
@@ -367,23 +367,23 @@ def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes | None
     """Generate a PDF report using FPDF."""
     if not FPDF_AVAILABLE:
         return None
-    
+
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    
+
     # Title
     pdf.set_font("Helvetica", "B", 16)
     pdf.cell(0, 10, _pdf_safe("Secure Coding Assistant - Scan Report"), ln=True, align="C")
     pdf.ln(5)
-    
+
     # Metadata
     pdf.set_font("Helvetica", "", 10)
     pdf.cell(0, 6, _pdf_safe(f"Scan Time: {scan_time}"), ln=True)
     pdf.cell(0, 6, _pdf_safe(f"Lines of Code: {len(code.splitlines())}"), ln=True)
     pdf.cell(0, 6, _pdf_safe(f"Issues Found: {len(issues)}"), ln=True)
     pdf.ln(5)
-    
+
     # Source Code
     pdf.set_font("Helvetica", "B", 12)
     pdf.cell(0, 8, _pdf_safe("Source Code"), ln=True)
@@ -391,44 +391,44 @@ def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes | None
     for line in code.splitlines():
         pdf.cell(0, 4, _pdf_safe(line[:120]), ln=True)
     pdf.ln(5)
-    
+
     # Issues
     pdf.set_font("Helvetica", "B", 12)
     pdf.cell(0, 8, _pdf_safe("Issues Detected"), ln=True)
     pdf.ln(2)
-    
+
     for i, issue in enumerate(issues, 1):
         pdf.set_font("Helvetica", "B", 10)
         pdf.cell(0, 6, _pdf_safe(f"Issue #{i}: {issue.get('vuln_type', 'Unknown').replace('_', ' ').title()}"), ln=True)
-        
+
         pdf.set_font("Helvetica", "", 9)
         pdf.cell(0, 5, _pdf_safe(f"  Line: {issue.get('line', 'N/A')}  |  Severity: {issue.get('severity', 'Low')}  |  Category: {issue.get('category', 'security')}"), ln=True)
         pdf.cell(0, 5, _pdf_safe(f"  Confidence: {issue.get('confidence', 'N/A')}  |  CWE: {issue.get('cwe_reference', 'N/A')}"), ln=True)
-        
+
         if issue.get("snippet"):
             pdf.set_font("Courier", "", 8)
             for line in issue["snippet"].splitlines():
                 pdf.cell(0, 4, _pdf_safe(f"  {line[:100]}"), ln=True)
-        
+
         if issue.get("message"):
             pdf.set_font("Helvetica", "I", 9)
             pdf.multi_cell(0, 5, _pdf_safe(f"  Detail: {issue['message']}"))
-        
+
         if issue.get("explanation"):
             pdf.set_font("Helvetica", "B", 9)
             pdf.cell(0, 5, _pdf_safe("  Explanation:"), ln=True)
             pdf.set_font("Helvetica", "", 9)
             pdf.multi_cell(0, 5, _pdf_safe(f"  {issue['explanation']}"))
-        
+
         if issue.get("secure_rewrite"):
             pdf.set_font("Helvetica", "B", 9)
             pdf.cell(0, 5, _pdf_safe("  Secure Rewrite:"), ln=True)
             pdf.set_font("Courier", "", 8)
             for line in issue["secure_rewrite"].splitlines():
                 pdf.cell(0, 4, _pdf_safe(f"  {line[:100]}"), ln=True)
-        
+
         pdf.ln(3)
-    
+
     return bytes(pdf.output())
 
 def download_button(content: str, filename: str, label: str, mime: str) -> None:
@@ -448,7 +448,7 @@ with st.sidebar:
     API_URL = st.text_input("API URL", value=API_URL, help="FastAPI backend URL")
     show_diff = st.checkbox("Show Diff View", value=True, help="Show side-by-side diff for secure rewrites")
     show_raw = st.checkbox("Show Raw JSON", value=False, help="Display raw API response")
-    
+
     st.divider()
     st.markdown("### 📊 Scan Summary")
     if "scan_result" in st.session_state:
@@ -463,7 +463,7 @@ with st.sidebar:
             col1.metric("🔴 High", high)
             col2.metric("🟡 Medium", med)
             col3.metric("🟢 Low", low)
-    
+
     st.divider()
     st.markdown("### 📥 Export Report")
     if "scan_result" in st.session_state and "scan_code" in st.session_state:
@@ -637,7 +637,7 @@ if "scan_result" in st.session_state:
     result = st.session_state.scan_result
     issues = result.get("issues", [])
     code = st.session_state.get("scan_code", st.session_state.code_text)
-    
+
     if issues:
         st.markdown("---")
 
@@ -731,7 +731,7 @@ if "scan_result" in st.session_state:
                         st.markdown(f"**Reference:** [{cwe}]({url})")
 
                 global_idx += 1
-    
+
     if show_raw:
         st.markdown("---")
         st.markdown("### Raw API Response")

@@ -262,7 +262,7 @@ def check_logical_errors(code: str) -> list[Issue]:
                             confidence="high",
                             severity=Severity.MEDIUM,
                             category=IssueCategory.LOGIC,
-                            message=f"Use '==' instead of 'is' to compare literal values",
+                            message="Use '==' instead of 'is' to compare literal values",
                         )
                     )
 
@@ -311,10 +311,10 @@ def check_logical_errors(code: str) -> list[Issue]:
 
     first_ref = {}
     for n in ast.walk(tree):
-        if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
-            if n.id not in defined_names and n.id not in PYTHON_BUILTINS:
-                if n.id not in first_ref:
-                    first_ref[n.id] = (n.lineno, _get_line_snippet(code, n.lineno))
+        if not isinstance(n, ast.Name) or not isinstance(n.ctx, ast.Load):
+            continue
+        if n.id not in defined_names and n.id not in PYTHON_BUILTINS:
+            first_ref.setdefault(n.id, (n.lineno, _get_line_snippet(code, n.lineno)))
 
     for name, (lineno, snippet) in sorted(first_ref.items()):
         issues.append(
@@ -333,10 +333,11 @@ def check_logical_errors(code: str) -> list[Issue]:
 
 
 def check_all_vuln_types(code: str) -> list[Issue]:
-    issues = []
-    issues.extend(_check_sql_injection(code))
-    issues.extend(_check_command_injection(code))
-    issues.extend(_check_hardcoded_secrets(code))
-    issues.extend(_check_xss(code))
+    issues = (
+        _check_sql_injection(code)
+        + _check_command_injection(code)
+        + _check_hardcoded_secrets(code)
+        + _check_xss(code)
+    )
     issues.sort(key=lambda x: x.line)
     return issues

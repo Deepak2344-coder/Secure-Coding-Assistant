@@ -41,7 +41,7 @@ def detect(code: str) -> set[str] | dict[str, str]:
     return detected
 
 
-def main():
+def main() -> None:
     samples_path = os.path.join(HERE, "samples.json")
     with open(samples_path, encoding="utf-8") as f:
         samples = json.load(f)
@@ -77,7 +77,7 @@ def main():
                 tn[vtype] += 1
 
     # Metrics
-    def metrics(t):
+    def metrics(t: str) -> tuple[float, float, float]:
         precision = tp[t] / (tp[t] + fp[t]) if (tp[t] + fp[t]) else 1.0
         recall = tp[t] / (tp[t] + fn[t]) if (tp[t] + fn[t]) else 1.0
         f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0

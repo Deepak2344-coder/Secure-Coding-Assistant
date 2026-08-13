@@ -13,8 +13,6 @@ from itertools import product
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-VULN_TYPES = ["sql_injection", "command_injection", "hardcoded_secret", "xss"]
-
 
 # --------------------------------------------------------------------------
 # SQL Injection

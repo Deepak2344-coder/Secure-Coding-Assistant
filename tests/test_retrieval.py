@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from backend.schemas import Issue, VulnType, Severity, IssueCategory
+from backend.schemas import Issue, VulnType, Severity
 
 
 class TestRetrieval:

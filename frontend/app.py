@@ -192,10 +192,12 @@ def render_severity_badge(severity: str) -> str:
     config = SEVERITY_CONFIG.get(severity, SEVERITY_CONFIG["Low"])
     return f'<span class="severity-badge {config["css_class"]} tooltipped" data-tooltip="{config["tooltip"]}">{config["icon"]} {config["label"]}</span>'
 
+
 def render_category_badge(category: str) -> str:
     """Render a styled category badge with icon and tooltip."""
     config = CATEGORY_CONFIG.get(category, CATEGORY_CONFIG["security"])
     return f'<span class="category-badge tooltipped" data-tooltip="{config["tooltip"]}">{config["icon"]} {config["label"]}</span>'
+
 
 def generate_diff(original: str, modified: str) -> str:
     """Generate a side-by-side diff HTML between original and modified code.

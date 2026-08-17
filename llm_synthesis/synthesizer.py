@@ -18,7 +18,7 @@ _gemini_client = None
 _groq_client = None
 
 
-def _get_gemini_client():
+def _get_gemini_client() -> object | None:
     global _gemini_client
     if _gemini_client is None and GEMINI_API_KEY:
         from google import genai
@@ -26,7 +26,7 @@ def _get_gemini_client():
     return _gemini_client
 
 
-def _get_groq_client():
+def _get_groq_client() -> object | None:
     global _groq_client
     if _groq_client is None and GROQ_API_KEY:
         from groq import Groq

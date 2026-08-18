@@ -15,6 +15,9 @@ SUSPICIOUS_VAR_PATTERNS = [
 
 HARDCODED_VALUE_PATTERN = re.compile(r'["\'][A-Za-z0-9_\-/=+]{16,}["\']')
 
+PERCENT_NAMED_PATTERN = re.compile(r'%\s*\(')
+PERCENT_OPERATOR_PATTERN = re.compile(r'%[sdxr]["\']?\s*%')
+
 COMMAND_INJECTION_PATTERNS = [
     re.compile(r'os\.system\s*\(.*\)'),
     re.compile(r'os\.popen\s*\(.*\)'),
@@ -76,7 +79,7 @@ def _check_sql_injection(code: str) -> list[Issue]:
         line_lower = line.lower()
         has_fstring = 'f"' in line_lower or "f'" in line_lower
         has_format = ".format(" in line
-        has_percent = re.search(r'%\s*\(', line) or re.search(r'%[sdxr]["\']?\s*%', line)
+        has_percent = PERCENT_NAMED_PATTERN.search(line) or PERCENT_OPERATOR_PATTERN.search(line)
 
         if has_concat or has_fstring or has_format or has_percent:
             issues.append(

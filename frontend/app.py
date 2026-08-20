@@ -1,10 +1,11 @@
-import streamlit as st
-import requests
-import difflib
 import base64
+import difflib
 import html
-from datetime import datetime
 import os
+from datetime import datetime
+
+import requests
+import streamlit as st
 
 try:
     from fpdf import FPDF

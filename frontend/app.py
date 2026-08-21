@@ -15,6 +15,7 @@ except ImportError:
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 MULTI_SCAN_KEY = "__multi__"
+_DOWNLOAD_BTN_STYLE = "display: inline-block; padding: 0.5rem 1rem; background: #3b82f6; color: white; border-radius: 0.375rem; text-decoration: none; font-weight: 500;"
 
 st.set_page_config(
     page_title="Secure Coding Assistant",
@@ -48,23 +49,6 @@ st.markdown("""
         font-weight: 500;
         background-color: #f1f5f9;
         color: #334155;
-    }
-    .copy-btn {
-        background: #f1f5f9;
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-        padding: 4px 8px;
-        font-size: 0.75rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .copy-btn:hover {
-        background: #e2e8f0;
-    }
-    .copy-btn.copied {
-        background: #dcfce7;
-        border-color: #86efac;
-        color: #166534;
     }
     .diff-container {
         font-family: 'Monospace', monospace;
@@ -342,7 +326,7 @@ def generate_markdown_report(code: str, issues: list, scan_time: str) -> str:
 
     return "\n".join(lines)
 
-def _pdf_safe(text: str) -> str:
+def _pdf_safe(text: str | None) -> str:
     """Make text safe for the default (Latin-1) PDF fonts.
 
     Replaces common Unicode punctuation (em/en dashes, smart quotes,
@@ -437,13 +421,13 @@ def generate_pdf_report(code: str, issues: list, scan_time: str) -> bytes | None
 def download_button(content: str, filename: str, label: str, mime: str) -> None:
     """Create a download button for text content."""
     b64 = base64.b64encode(content.encode()).decode()
-    href = f'<a href="data:{mime};base64,{b64}" download="{filename}" style="display: inline-block; padding: 0.5rem 1rem; background: #3b82f6; color: white; border-radius: 0.375rem; text-decoration: none; font-weight: 500;">{label}</a>'
+    href = f'<a href="data:{mime};base64,{b64}" download="{filename}" style="{_DOWNLOAD_BTN_STYLE}">{label}</a>'
     st.markdown(href, unsafe_allow_html=True)
 
 def pdf_download_button(pdf_bytes: bytes, filename: str, label: str) -> None:
     """Create a download button for PDF content."""
     b64 = base64.b64encode(pdf_bytes).decode()
-    href = f'<a href="data:application/pdf;base64,{b64}" download="{filename}" style="display: inline-block; padding: 0.5rem 1rem; background: #3b82f6; color: white; border-radius: 0.375rem; text-decoration: none; font-weight: 500;">{label}</a>'
+    href = f'<a href="data:application/pdf;base64,{b64}" download="{filename}" style="{_DOWNLOAD_BTN_STYLE}">{label}</a>'
     st.markdown(href, unsafe_allow_html=True)
 
 with st.sidebar:

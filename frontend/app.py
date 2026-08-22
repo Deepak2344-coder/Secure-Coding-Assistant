@@ -17,6 +17,16 @@ API_URL = os.getenv("API_URL", "http://localhost:8000")
 MULTI_SCAN_KEY = "__multi__"
 _DOWNLOAD_BTN_STYLE = "display: inline-block; padding: 0.5rem 1rem; background: #3b82f6; color: white; border-radius: 0.375rem; text-decoration: none; font-weight: 500;"
 
+_PDF_REPLACEMENTS = {
+    "\u2014": "-", "\u2013": "-",          # em / en dash
+    "\u2018": "'", "\u2019": "'",          # smart single quotes
+    "\u201c": '"', "\u201d": '"',          # smart double quotes
+    "\u2026": "...", "\u2022": "*",        # ellipsis / bullet
+    "\u2192": "->", "\u2190": "<-", "\u2194": "<->",  # arrows
+    "\u00a0": " ",                          # non-breaking space
+    "\u2011": "-", "\u2043": "-",          # non-breaking / hyphen bullet
+}
+
 st.set_page_config(
     page_title="Secure Coding Assistant",
     page_icon="🛡️",
@@ -336,16 +346,7 @@ def _pdf_safe(text: str | None) -> str:
     """
     if text is None:
         return ""
-    repl = {
-        "\u2014": "-", "\u2013": "-",          # em / en dash
-        "\u2018": "'", "\u2019": "'",          # smart single quotes
-        "\u201c": '"', "\u201d": '"',          # smart double quotes
-        "\u2026": "...", "\u2022": "*",        # ellipsis / bullet
-        "\u2192": "->", "\u2190": "<-", "\u2194": "<->",  # arrows
-        "\u00a0": " ",                          # non-breaking space
-        "\u2011": "-", "\u2043": "-",          # non-breaking / hyphen bullet
-    }
-    for k, v in repl.items():
+    for k, v in _PDF_REPLACEMENTS.items():
         text = text.replace(k, v)
     return text.encode("latin-1", "replace").decode("latin-1")
 

@@ -32,7 +32,7 @@ XSS_PATTERNS = [
     re.compile(r'(?<!\.)Markup\s*\((?!.*escape\s*\()'),
 ]
 
-PYTHON_BUILTINS = {
+PYTHON_BUILTINS = frozenset({
     "True", "False", "None",
     "print", "len", "range", "int", "str", "float", "bool",
     "list", "dict", "set", "tuple", "type", "input", "open",
@@ -50,13 +50,13 @@ PYTHON_BUILTINS = {
     "globals", "locals", "slice", "pow", "round", "__import__",
     "AssertionError", "NotImplementedError", "PendingDeprecationWarning",
     "bytes", "bytearray", "memoryview", "frozenset",
-}
+})
 
-SHADOWED_BUILTINS = {
+SHADOWED_BUILTINS = frozenset({
     "list", "dict", "set", "tuple", "str", "int", "float", "bool",
     "input", "print", "open", "len", "range", "type", "sum", "min", "max",
     "file", "exec", "eval", "id", "object", "super",
-}
+})
 
 
 def _get_line_snippet(code: str, line_no: int) -> str:

@@ -2,6 +2,7 @@ import base64
 import difflib
 import html
 import os
+from collections import Counter, defaultdict
 from datetime import datetime
 
 import requests
@@ -607,7 +608,6 @@ if scan_clicked:
                 else:
                     st.warning(f"⚠️ Found {len(result['issues'])} issue(s)")
                     if files_mode:
-                        from collections import Counter
                         per_file = Counter(i.get("file_path", "?") for i in result["issues"])
                         details = ", ".join(f"{p}: {n}" for p, n in per_file.most_common())
                         st.caption(f"Per file — {details}")
@@ -632,7 +632,6 @@ if "scan_result" in st.session_state:
         # Group issues by file_path for multi-file scans
         has_file_paths = any(i.get("file_path") for i in issues)
         if has_file_paths:
-            from collections import defaultdict
             by_file = defaultdict(list)
             for i in issues:
                 by_file[i.get("file_path", "")].append(i)

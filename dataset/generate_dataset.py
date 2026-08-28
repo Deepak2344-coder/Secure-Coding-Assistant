@@ -48,7 +48,7 @@ def _sqli_vulnerable():
     funcs = ["get_user", "login", "search", "find_record", "fetch"]
     vars_ = ["name", "username", "user_input", "term", "ident"]
 
-    def build_query(style, clause, var):
+    def build_query(style: str, clause: str, var: str) -> str:
         if style == "concat":
             return '"' + clause + '\'" + ' + var + ' + "\'"'
         if style == "fstring":
@@ -300,7 +300,7 @@ def generate():
     return samples
 
 
-def main():
+def main() -> None:
     samples = generate()
     out_path = os.path.join(HERE, "samples.json")
     with open(out_path, "w", encoding="utf-8") as f:
